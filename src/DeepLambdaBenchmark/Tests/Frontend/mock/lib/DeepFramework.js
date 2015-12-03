@@ -16,9 +16,9 @@ DeepFramework.Kernel.load({
     }
   },
   "microservices":{
-    "hello.world.example":{
-      "identifier":"hello.world.example",
-      "localPath":"/var/folders/td/l6f2jrdj25x9dw6nxx3_4khc0000gn/T/hello_api_1444009917471/HelloWorld",
+    "deep.lambda.benchmark":{
+      "identifier":"deep.lambda.benchmark",
+      "localPath":"/var/folders/td/l6f2jrdj25x9dw6nxx3_4khc0000gn/T/hello_api_1444009917471/DeepLambdaBenchmark",
       "resources":{
         "sample":{
           "say-hello":{
@@ -72,9 +72,9 @@ DeepFramework.Kernel.load({
         }
       },
       "raw":{
-        "name":"HelloWorld",
+        "name":"DeepLambdaBenchmark",
         "propertyRoot":true,
-        "identifier":"hello.world.example",
+        "identifier":"deep.lambda.benchmark",
         "description":"Example microservice that does hello world",
         "version":"0.0.1",
         "author":{
@@ -119,15 +119,15 @@ DeepFramework.Kernel.load({
               "runtime":"nodejs"
             }
           },
-          "sample-say-hello":"/var/folders/td/l6f2jrdj25x9dw6nxx3_4khc0000gn/T/hello_api_1444009917471/HelloWorld/Backend/src/SayHello"
+          "sample-say-hello":"/var/folders/td/l6f2jrdj25x9dw6nxx3_4khc0000gn/T/hello_api_1444009917471/DeepLambdaBenchmark/Backend/src/SayHello"
         }
       },
       "isRoot":true,
       "autoload":{
-        "frontend":"/var/folders/td/l6f2jrdj25x9dw6nxx3_4khc0000gn/T/hello_api_1444009917471/HelloWorld/Frontend",
-        "backend":"/var/folders/td/l6f2jrdj25x9dw6nxx3_4khc0000gn/T/hello_api_1444009917471/HelloWorld/Backend",
-        "docs":"/var/folders/td/l6f2jrdj25x9dw6nxx3_4khc0000gn/T/hello_api_1444009917471/HelloWorld/Docs",
-        "models":"/var/folders/td/l6f2jrdj25x9dw6nxx3_4khc0000gn/T/hello_api_1444009917471/HelloWorld/Models"
+        "frontend":"/var/folders/td/l6f2jrdj25x9dw6nxx3_4khc0000gn/T/hello_api_1444009917471/DeepLambdaBenchmark/Frontend",
+        "backend":"/var/folders/td/l6f2jrdj25x9dw6nxx3_4khc0000gn/T/hello_api_1444009917471/DeepLambdaBenchmark/Backend",
+        "docs":"/var/folders/td/l6f2jrdj25x9dw6nxx3_4khc0000gn/T/hello_api_1444009917471/DeepLambdaBenchmark/Docs",
+        "models":"/var/folders/td/l6f2jrdj25x9dw6nxx3_4khc0000gn/T/hello_api_1444009917471/DeepLambdaBenchmark/Models"
       },
       "lambdas":{
         "sample-say-hello":{
@@ -294,12 +294,12 @@ DeepFramework.Kernel.load({
     },
     "lambda":{
       "names":{
-        "hello.world.example":{
+        "deep.lambda.benchmark":{
           "sample-say-hello":"DeepTestSampleSayHelloba335502"
         }
       },
       "executionRoles":{
-        "hello.world.example":{
+        "deep.lambda.benchmark":{
           "sample-say-hello":{
             "Path":"/",
             "RoleName":"DeepTestSampleSayHelloExecba335502",
@@ -402,19 +402,19 @@ DeepFramework.Kernel.load({
                       "_service":"s3",
                       "_region":"",
                       "_accountId":"",
-                      "_descriptor":"deep.test.public.f58609f5/hello.world.example/*"
+                      "_descriptor":"deep.test.public.f58609f5/deep.lambda.benchmark/*"
                     },
                     {
                       "_service":"s3",
                       "_region":"",
                       "_accountId":"",
-                      "_descriptor":"deep.test.temp.f58609f5/hello.world.example/*"
+                      "_descriptor":"deep.test.temp.f58609f5/deep.lambda.benchmark/*"
                     },
                     {
                       "_service":"s3",
                       "_region":"",
                       "_accountId":"",
-                      "_descriptor":"deep.test.system.f58609f5/hello.world.example/*"
+                      "_descriptor":"deep.test.system.f58609f5/deep.lambda.benchmark/*"
                     }
                   ]
                 },

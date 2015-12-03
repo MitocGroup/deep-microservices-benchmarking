@@ -9,7 +9,7 @@ import moduleName from '../name';
 export class SayHelloController {
   constructor($scope) {
     // @todo: inject this using ng DI
-    this._helloResource = DeepFramework.Kernel.get('resource').get('@hello.world.example:sample');
+    this._helloResource = DeepFramework.Kernel.get('resource').get('@deep.lambda.benchmark:sample');
     this._$scope = $scope;
 
     this._$scope.catchSubmit = this.catchSubmit.bind(this);

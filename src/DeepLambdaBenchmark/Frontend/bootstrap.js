@@ -1,8 +1,8 @@
 'use strict';
 'format es6';
 
-export default function deepHelloWorld() {
-  return System.import('/hello.world.example/js/app/angular/index.js');
+export default function deepDeepLambdaBenchmark() {
+  return System.import('/deep.lambda.benchmark/js/app/angular/index.js');
 }
 
 export function configLoad() {

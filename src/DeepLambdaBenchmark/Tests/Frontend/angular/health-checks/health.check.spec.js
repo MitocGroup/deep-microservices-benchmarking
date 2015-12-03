@@ -23,7 +23,7 @@ describe('Angular', function() {
 });
 
 describe('Application', function() {
-  it('Module name is [deepHelloWorld]', function() {
-    expect(moduleName).toBe('deepHelloWorld');
+  it('Module name is [deepDeepLambdaBenchmark]', function() {
+    expect(moduleName).toBe('deepDeepLambdaBenchmark');
   });
 });

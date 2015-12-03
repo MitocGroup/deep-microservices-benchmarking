@@ -8,7 +8,7 @@ export default {
     url: '/say-hello',
     controller: 'SayHelloController',
     controllerAs: 'say-hello',
-    templateUrl: deepAsset.locate('@hello.world.example:js/app/angular/views/hello.html'),
+    templateUrl: deepAsset.locate('@deep.lambda.benchmark:js/app/angular/views/hello.html'),
     data: {
       pageTitle: 'Hello World!',
     },
