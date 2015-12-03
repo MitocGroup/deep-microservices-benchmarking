@@ -6,7 +6,7 @@
 
 import moduleName from '../name';
 
-export class SayHelloController {
+export class MainController {
   constructor($scope) {
     // @todo: inject this using ng DI
     this._helloResource = DeepFramework.Kernel.get('resource').get('@deep.lambda.benchmark:sample');
@@ -27,9 +27,9 @@ export class SayHelloController {
   }
 }
 
-angular.module(moduleName).controller('SayHelloController',
+angular.module(moduleName).controller('MainController',
   ['$scope', function(...args) {
-    return new SayHelloController(...args);
+    return new MainController(...args);
   },]
 
 );

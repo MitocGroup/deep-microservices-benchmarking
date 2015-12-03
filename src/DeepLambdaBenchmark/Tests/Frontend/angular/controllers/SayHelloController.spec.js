@@ -16,7 +16,7 @@ describe('Controllers', function() {
     $controller = _$controller_;
   }));
 
-  describe('SayHelloController', function() {
+  describe('MainController', function() {
     let controllerArgs = {
       $scope: {
         catchSubmit: null,
@@ -28,7 +28,7 @@ describe('Controllers', function() {
     };
 
     it('Controller is implemented', function() {
-      controller = $controller('SayHelloController', controllerArgs);
+      controller = $controller('MainController', controllerArgs);
 
       expect(Object.keys(controller).length).toBe(2);
     });

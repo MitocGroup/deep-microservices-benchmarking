@@ -1,16 +1,16 @@
 'use strict';
 'format es6';
 
-var deepAsset = DeepFramework.Kernel.container.get('asset');
+var deepAsset = DeepFramework.Kernel.get('asset');
 
 export default {
-  'say-hello': {
-    url: '/say-hello',
-    controller: 'SayHelloController',
-    controllerAs: 'say-hello',
-    templateUrl: deepAsset.locate('@deep.lambda.benchmark:js/app/angular/views/hello.html'),
+  'main': {
+    url: '/',
+    controller: 'MainController',
+    controllerAs: 'main',
+    templateUrl: deepAsset.locate('@deep.lambda.benchmark:js/app/angular/views/main.html'),
     data: {
-      pageTitle: 'Hello World!',
+      pageTitle: 'Lambda Benchmark',
     },
   },
 };
