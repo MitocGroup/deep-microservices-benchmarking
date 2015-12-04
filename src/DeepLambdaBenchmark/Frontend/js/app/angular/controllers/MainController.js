@@ -8,23 +8,48 @@ import moduleName from '../name';
 
 export class MainController {
   constructor($scope) {
-    // @todo: inject this using ng DI
-    this._deepResource = DeepFramework.Kernel.get('resource');
-    this._helloResource = DeepFramework.Kernel.get('resource').get('@deep.lambda.benchmark:sample');
     this._$scope = $scope;
-
-    this._$scope.catchSubmit = this.catchSubmit.bind(this);
+    this._deepResource = DeepFramework.Kernel.get('resource');
   }
 
-  catchSubmit() {
-    let payload = {
-      Name: this._$scope.name
-    };
+  catchSubmit(resourceId) {
+    let payload = {};
 
-    this._invokeResource('@deep.lambda.benchmark:sample:say-hello', payload, 10, 500, (timeStack) => {
+    this._invokeResource(resourceId, payload, 10, 1000, (timeStack) => {
       this._$scope.data = JSON.stringify(timeStack, null, '  ');
       this._$scope.$digest();
     });
+  }
+
+  get resources() {
+    let resourcesStack = [];
+    let deepResources = this._deepResource._resources;
+
+    for (let msId in deepResources) {
+      if (!deepResources.hasOwnProperty(msId)) {
+        continue;
+      }
+
+      let msResources = deepResources[msId];
+
+      for (let resourceId in msResources) {
+        if (!msResources.hasOwnProperty(resourceId)) {
+          continue;
+        }
+
+        let resourceActions = msResources[resourceId]._rawActions;
+
+        for (let actionId in resourceActions) {
+          if (!resourceActions.hasOwnProperty(actionId)) {
+            continue;
+          }
+
+          resourcesStack.push(`@${msId}:${resourceId}:${actionId}`);
+        }
+      }
+    }
+
+    return resourcesStack;
   }
 
   _invokeResource(resourceId, payload = {}, loops = 10, intervalMs = 1000, callback = () => {}) {
@@ -37,10 +62,6 @@ export class MainController {
           start: new Date().getTime()
         };
 
-        let time = new Date().toISOString();
-
-        console.log(`Request ${index} started at ${time}`);
-
         resourceAction.request(payload).send((response) => {
           receivedResponses++;
 
@@ -48,8 +69,6 @@ export class MainController {
           requestTime.duration = requestTime.stop - requestTime.start;
 
           timeStack['request_'+index] = requestTime;
-
-          console.log(`Request ${index} stopped.`);
 
           if (receivedResponses === loops) {
             callback(timeStack);

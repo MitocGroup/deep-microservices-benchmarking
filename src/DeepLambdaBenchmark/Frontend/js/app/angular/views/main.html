@@ -1,9 +1,8 @@
 <h1>Lambdas Benchmark</h1>
 
 <p>
-<form ng-submit="catchSubmit()">
-    <input type="text" ng-model="name" placeholder="Type your name"/>
-    <input type="submit" value="Send"/>
+<form name="{{ resourceId }}" ng-repeat="resourceId in main.resources" ng-submit="main.catchSubmit(resourceId)">
+    {{ resourceId }} <input type="submit" value="Start"/>
 </form>
 
 <pre ng-bind="data"></pre>
