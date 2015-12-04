@@ -13,5 +13,27 @@
     </form>
 </div>
 
-<pre ng-bind="data"></pre>
-</p>
+<br/>
+<p style="text-align: center" ng-bind="main.loadingText"></p>
+<br/>
+
+<div>
+    <table datatable="ng" class="row-border hover">
+        <thead>
+        <tr>
+            <th>Request #</th>
+            <th>Start time</th>
+            <th>Stop time</th>
+            <th>Duration (ms)</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="request in main.requests">
+            <td>{{ request.index }}</td>
+            <td>{{ request.start| date:'HH:mm:ss.sss' }}</td>
+            <td>{{ request.stop| date:'HH:mm:ss.sss' }}</td>
+            <td>{{ request.duration }}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

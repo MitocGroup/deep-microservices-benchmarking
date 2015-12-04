@@ -3,4 +3,5 @@
 
 export default [
   'ui.router',
+  'datatables',
 ];

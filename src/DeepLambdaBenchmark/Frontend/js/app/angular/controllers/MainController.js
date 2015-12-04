@@ -12,21 +12,22 @@ export class MainController {
     this._deepResource = DeepFramework.Kernel.get('resource');
 
     this.config = {
-      loops: 10,
-      interval: 1000
+      loops: 2,
+      interval: 500
     };
+
+    this.requests = [];
+    this.loadingText = '';
   }
 
   catchSubmit(resourceId) {
     let payload = {};
+    this.requests = [];
+    this.loadingText = 'Loading...';
 
-    this._$scope.data = 'Loading...';
-
-    this._invokeResource(resourceId, payload, this.config.loops, this.config.interval, (timeStack) => {
-      let data = {};
-      data[resourceId] = timeStack;
-
-      this._$scope.data = JSON.stringify(data, null, ' ');
+    this._invokeResource(resourceId, payload, this.config.loops, this.config.interval, (requestsStack) => {
+      this.loadingText = `Result for "${resourceId}"`;
+      this.requests = requestsStack;
       this._$scope.$digest();
     });
   }
@@ -63,25 +64,26 @@ export class MainController {
   }
 
   _invokeResource(resourceId, payload, loops, intervalMs, callback) {
-    let timeStack = {};
+    let requestsStack = [];
     let resourceAction = this._deepResource.get(resourceId);
     let receivedResponses = 0;
 
     function execRequest(index = 0) {
-        let requestTime = {
-          start: new Date().getTime()
+        let requestInfo = {
+          index: index,
+          start: new Date().getTime(),
         };
 
         resourceAction.request(payload).send((response) => {
           receivedResponses++;
 
-          requestTime.stop = new Date().getTime();
-          requestTime.duration = requestTime.stop - requestTime.start;
+          requestInfo.stop = new Date().getTime();
+          requestInfo.duration = requestInfo.stop - requestInfo.start;
 
-          timeStack['request_'+index] = requestTime;
+          requestsStack.push(requestInfo);
 
           if (receivedResponses == loops) {
-            callback(timeStack);
+            callback(requestsStack);
           }
         });
 
