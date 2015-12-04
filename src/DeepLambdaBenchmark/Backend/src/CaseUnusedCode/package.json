@@ -1,7 +1,7 @@
 {
-  "name": "say-hello-test",
+  "name": "unused-code",
   "version": "0.0.1",
-  "description": "Lambda that says hello to the world",
+  "description": "",
   "author": {
     "name": "Mitoc Group", 
     "email": "hello@mitocgroup.com",
@@ -27,7 +27,12 @@
     "compile": "deepify compile-es6 `pwd`"
   },
   "dependencies": {
-    "deep-framework": "^1.x.x"
+    "deep-framework": "^1.x.x",
+
+    "vogels": "*",
+    "joi": "*",
+    "babel-polyfill": "*",
+    "aws-sdk": "*"
   },
   "devDependencies": {
   },

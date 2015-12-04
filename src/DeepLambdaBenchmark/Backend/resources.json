@@ -1,12 +1,20 @@
 {
-  "sample": {
-    "say-hello": {
-      "description": "Says hello to the world",
+  "case": {
+    "without-babel": {
+      "description": "testing lambda performance",
       "type": "lambda",
       "methods": [
-        "POST"
+        "GET"
       ],
-      "source": "src/SayHello"
+      "source": "src/CaseWithoutBabel"
+    },
+    "unused-code": {
+      "description": "testing lambda performance",
+      "type": "lambda",
+      "methods": [
+        "GET"
+      ],
+      "source": "src/CaseUnusedCode"
     }
   }
 }
