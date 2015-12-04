@@ -127,3 +127,5 @@ _config.json
 
 #Angular root MS
 src/DeepNgRoot
+
+vendor
