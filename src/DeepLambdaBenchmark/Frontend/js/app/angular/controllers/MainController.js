@@ -10,13 +10,23 @@ export class MainController {
   constructor($scope) {
     this._$scope = $scope;
     this._deepResource = DeepFramework.Kernel.get('resource');
+
+    this.config = {
+      loops: 10,
+      interval: 1000
+    };
   }
 
   catchSubmit(resourceId) {
     let payload = {};
 
-    this._invokeResource(resourceId, payload, 10, 1000, (timeStack) => {
-      this._$scope.data = JSON.stringify(timeStack, null, '  ');
+    this._$scope.data = 'Loading...';
+
+    this._invokeResource(resourceId, payload, this.config.loops, this.config.interval, (timeStack) => {
+      let data = {};
+      data[resourceId] = timeStack;
+
+      this._$scope.data = JSON.stringify(data, null, ' ');
       this._$scope.$digest();
     });
   }
@@ -52,7 +62,7 @@ export class MainController {
     return resourcesStack;
   }
 
-  _invokeResource(resourceId, payload = {}, loops = 10, intervalMs = 1000, callback = () => {}) {
+  _invokeResource(resourceId, payload, loops, intervalMs, callback) {
     let timeStack = {};
     let resourceAction = this._deepResource.get(resourceId);
     let receivedResponses = 0;
@@ -70,7 +80,7 @@ export class MainController {
 
           timeStack['request_'+index] = requestTime;
 
-          if (receivedResponses === loops) {
+          if (receivedResponses == loops) {
             callback(timeStack);
           }
         });

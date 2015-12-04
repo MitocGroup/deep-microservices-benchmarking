@@ -1,5 +1,11 @@
 <h1>Lambdas Benchmark</h1>
 
+<label>Loops:</label>
+<input ng-model="main.config.loops" ng-pattern="/^\d+$/" name="loops" />
+
+<label>Interval(ms)</label>
+<input ng-model="main.config.interval" ng-pattern="/^\d+$/" name="interval" />
+
 <p>
 <form name="{{ resourceId }}" ng-repeat="resourceId in main.resources" ng-submit="main.catchSubmit(resourceId)">
     {{ resourceId }} <input type="submit" value="Start"/>

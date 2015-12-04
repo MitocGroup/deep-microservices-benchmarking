@@ -116,3 +116,14 @@ lib.compiled
 deeploy.json
 _config.json
 .cfg.*
+
+#Transpiled Lambdas code
+**/Backend/src/**/*.js
+
+#Lambda archives and checksums
+**/Backend/src/**/*.zip
+**/Backend/src/**/*.sfv
+**/Backend/src/**/_config.json
+
+#Angular root MS
+src/DeepNgRoot
