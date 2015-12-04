@@ -115,3 +115,4 @@ lib.compiled
 .DS_Store
 deeploy.json
 _config.json
+.cfg.*
