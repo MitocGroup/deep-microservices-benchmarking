@@ -6,10 +6,12 @@
 <label>Interval(ms)</label>
 <input ng-model="main.config.interval" ng-pattern="/^\d+$/" name="interval" />
 
-<p>
-<form name="{{ resourceId }}" ng-repeat="resourceId in main.resources" ng-submit="main.catchSubmit(resourceId)">
-    {{ resourceId }} <input type="submit" value="Start"/>
-</form>
+<div ng-repeat="resourceId in main.resources">
+    <br />
+    <form name="{{ resourceId }}" ng-submit="main.catchSubmit(resourceId)">
+        {{ resourceId }} <input type="submit" value="Start"/>
+    </form>
+</div>
 
 <pre ng-bind="data"></pre>
 </p>
