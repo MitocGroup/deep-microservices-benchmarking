@@ -87,6 +87,7 @@ export class MainController {
 
           requestInfo.stop = new Date().getTime();
           requestInfo.duration = requestInfo.stop - requestInfo.start;
+          requestInfo.internalDebug = response.data.hasOwnProperty('debug') ? response.data.debug : {};
 
           requestsStack.push(requestInfo);
 

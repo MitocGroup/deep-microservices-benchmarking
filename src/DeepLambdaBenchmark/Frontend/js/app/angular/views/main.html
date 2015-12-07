@@ -27,19 +27,24 @@
     <div>
         <table ng-table="main.tableParams" class="table table-bordered table-striped" show-filter="false">
             <tr ng-repeat="request in $data">
-                <td title="'Request #'" filter="{ index: 'number'}" sortable="'index'">
+                <td title="'Request #'" sortable="'index'">
                     {{ request.index }}
                 </td>
-                <td title="'Start time'" filter="{ start: 'number'}" sortable="'start'">
+                <td title="'Start time'" sortable="'start'">
                     {{ request.start| date:'HH:mm:ss.sss' }}
                 </td>
-                <td title="'Stop time'" filter="{ stop: 'number'}" sortable="'stop'">
+                <td title="'Stop time'" sortable="'stop'">
                     {{ request.stop| date:'HH:mm:ss.sss' }}
                 </td>
-                <td title="'Duration (ms)'" filter="{ duration: 'number'}" sortable="'duration'">
+                <td title="'Duration (ms)'" sortable="'duration'">
                     {{ request.duration }}
                 </td>
-            </tr>
+                <td title="'Details'">
+                    <p ng-repeat="(actionName, durationMs) in request.internalDebug">
+                        {{ actionName }} : {{ durationMs }}
+                    </p>
+                </td>
+            </p>
         </table>
     </div>
 </div>
