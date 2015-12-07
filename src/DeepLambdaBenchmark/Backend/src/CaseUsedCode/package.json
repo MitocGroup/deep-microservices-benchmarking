@@ -29,16 +29,11 @@
   "dependencies": {
     "deep-framework": "^1.x.x",
 
+    "aws-sdk": "*",
     "vogels": "*",
     "joi": "*",
-    "babel-polyfill": "*",
-    "aws-sdk": "*",
-    "chai": "*",
-    "sinon": "*",
-    "sinon-chai": "*",
     "ioredis": "*",
     "store": "*",
-    "fs-extra": "*",
     "superagent":"*"
   },
   "devDependencies": {
