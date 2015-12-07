@@ -12,21 +12,25 @@ export class MainController {
     this._deepResource = DeepFramework.Kernel.get('resource');
 
     this.config = {
-      loops: 10,
-      interval: 1000
+      loops: 2,
+      interval: 500
     };
+
+    this.resultsStack = {};
+    this.loadingText = '';
+    this.workingResource = null;
   }
 
   catchSubmit(resourceId) {
     let payload = {};
 
-    this._$scope.data = 'Loading...';
+    this.workingResource = resourceId;
+    this.resultsStack[resourceId] = [];
+    this.loadingText = 'Loading...';
 
-    this._invokeResource(resourceId, payload, this.config.loops, this.config.interval, (timeStack) => {
-      let data = {};
-      data[resourceId] = timeStack;
-
-      this._$scope.data = JSON.stringify(data, null, ' ');
+    this._invokeResource(resourceId, payload, this.config.loops, this.config.interval, (resourceRequests) => {
+      this.resultsStack[resourceId] = resourceRequests;
+      this.loadingText = `Result for "${resourceId}"`;
       this._$scope.$digest();
     });
   }
@@ -63,25 +67,26 @@ export class MainController {
   }
 
   _invokeResource(resourceId, payload, loops, intervalMs, callback) {
-    let timeStack = {};
+    let requestsStack = [];
     let resourceAction = this._deepResource.get(resourceId);
     let receivedResponses = 0;
 
     function execRequest(index = 0) {
-        let requestTime = {
-          start: new Date().getTime()
+        let requestInfo = {
+          index: index,
+          start: new Date().getTime(),
         };
 
-        resourceAction.request(payload).send((response) => {
+        resourceAction.request(payload).disableCache().send((response) => {
           receivedResponses++;
 
-          requestTime.stop = new Date().getTime();
-          requestTime.duration = requestTime.stop - requestTime.start;
+          requestInfo.stop = new Date().getTime();
+          requestInfo.duration = requestInfo.stop - requestInfo.start;
 
-          timeStack['request_'+index] = requestTime;
+          requestsStack.push(requestInfo);
 
           if (receivedResponses == loops) {
-            callback(timeStack);
+            callback(requestsStack);
           }
         });
 
@@ -95,6 +100,37 @@ export class MainController {
     };
 
     execRequest();
+  }
+
+  /**
+   * @param resourceId
+   * @returns {{min: number, max: number, avg: number}}
+   * @private
+   */
+  getResultsSummary(resourceId) {
+    let results = this.resultsStack.hasOwnProperty(resourceId) ? this.resultsStack[resourceId] : {};
+    let durationArr = [];
+
+    for (let resultKey in results) {
+      if (!results.hasOwnProperty(resultKey)) {
+        continue;
+      }
+
+      let result = results[resultKey];
+
+      durationArr.push(result.duration);
+    }
+
+    let result = null;
+    if (durationArr.length) {
+      result = {
+        min: Math.min(...durationArr),
+        max: Math.max(...durationArr),
+        avg: Math.round(durationArr.reduce((a, b) => a + b) / durationArr.length),
+      };
+    }
+
+    return result;
   }
 }
 
