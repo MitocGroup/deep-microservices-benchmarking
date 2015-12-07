@@ -9,7 +9,13 @@
 <div ng-repeat="resourceId in main.resources">
     <br />
     <form name="{{ resourceId }}" ng-submit="main.catchSubmit(resourceId)">
-        {{ resourceId }} <input type="submit" value="Start"/>
+        {{ resourceId }}
+
+        {{ resultSummary = main.getResultsSummary(resourceId);""}}
+        <b ng-if="resultSummary !== null">
+            (min:{{ resultSummary.min }}, max:{{ resultSummary.max }}, avg:{{ resultSummary.avg }})
+        </b>
+        <input type="submit" value="Start"/>
     </form>
 </div>
 
@@ -21,18 +27,18 @@
     <table datatable="ng" class="row-border hover">
         <thead>
         <tr>
-            <th>Request #</th>
-            <th>Start time</th>
-            <th>Stop time</th>
-            <th>Duration (ms)</th>
+            <th class="dt-body-center">Request #</th>
+            <th class="dt-head-center">Start time</th>
+            <th class="dt-head-center">Stop time</th>
+            <th class="dt-head-center">Duration (ms)</th>
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="request in main.requests">
-            <td>{{ request.index }}</td>
-            <td>{{ request.start| date:'HH:mm:ss.sss' }}</td>
-            <td>{{ request.stop| date:'HH:mm:ss.sss' }}</td>
-            <td>{{ request.duration }}</td>
+        <tr ng-repeat="request in main.resultsStack[main.workingResource]">
+            <td class="dt-body-center">{{ request.index }}</td>
+            <td class="dt-body-center">{{ request.start| date:'HH:mm:ss.sss' }}</td>
+            <td class="dt-body-center">{{ request.stop| date:'HH:mm:ss.sss' }}</td>
+            <td class="dt-body-center">{{ request.duration }}</td>
         </tr>
         </tbody>
     </table>

@@ -16,18 +16,21 @@ export class MainController {
       interval: 500
     };
 
-    this.requests = [];
+    this.resultsStack = {};
     this.loadingText = '';
+    this.workingResource = null;
   }
 
   catchSubmit(resourceId) {
     let payload = {};
-    this.requests = [];
+
+    this.workingResource = resourceId;
+    this.resultsStack[resourceId] = [];
     this.loadingText = 'Loading...';
 
-    this._invokeResource(resourceId, payload, this.config.loops, this.config.interval, (requestsStack) => {
+    this._invokeResource(resourceId, payload, this.config.loops, this.config.interval, (resourceRequests) => {
+      this.resultsStack[resourceId] = resourceRequests;
       this.loadingText = `Result for "${resourceId}"`;
-      this.requests = requestsStack;
       this._$scope.$digest();
     });
   }
@@ -97,6 +100,37 @@ export class MainController {
     };
 
     execRequest();
+  }
+
+  /**
+   * @param resourceId
+   * @returns {{min: number, max: number, avg: number}}
+   * @private
+   */
+  getResultsSummary(resourceId) {
+    let results = this.resultsStack.hasOwnProperty(resourceId) ? this.resultsStack[resourceId] : {};
+    let durationArr = [];
+
+    for (let resultKey in results) {
+      if (!results.hasOwnProperty(resultKey)) {
+        continue;
+      }
+
+      let result = results[resultKey];
+
+      durationArr.push(result.duration);
+    }
+
+    let result = null;
+    if (durationArr.length) {
+      result = {
+        min: Math.min(...durationArr),
+        max: Math.max(...durationArr),
+        avg: durationArr.reduce((a, b) => a + b) / durationArr.length,
+      };
+    }
+
+    return result;
   }
 }
 
