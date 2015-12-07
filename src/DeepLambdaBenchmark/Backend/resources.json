@@ -31,6 +31,14 @@
         "GET"
       ],
       "source": "src/CaseUsedCode"
+    },
+    "with-framework": {
+      "description": "testing lambda performance",
+      "type": "lambda",
+      "methods": [
+        "GET"
+      ],
+      "source": "src/CaseWithFramework"
     }
   }
 }
