@@ -77,7 +77,7 @@ export class MainController {
           start: new Date().getTime(),
         };
 
-        resourceAction.request(payload).send((response) => {
+        resourceAction.request(payload).disableCache().send((response) => {
           receivedResponses++;
 
           requestInfo.stop = new Date().getTime();
@@ -126,7 +126,7 @@ export class MainController {
       result = {
         min: Math.min(...durationArr),
         max: Math.max(...durationArr),
-        avg: durationArr.reduce((a, b) => a + b) / durationArr.length,
+        avg: Math.round(durationArr.reduce((a, b) => a + b) / durationArr.length),
       };
     }
 
