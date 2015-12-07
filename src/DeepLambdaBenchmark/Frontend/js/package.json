@@ -8,10 +8,8 @@
     },
     "configFile": "config.system.js",
     "dependencies": {
-      "angular-datatables": "npm:angular-datatables@^0.4.3",
-      "angular/angular.js": "github:angular/angular.js@1.4.0",
-      "css": "github:systemjs/plugin-css@^0.1.20",
-      "jquery": "github:components/jquery@^2.1.4"
+      "esvit/ng-table": "github:esvit/ng-table@1.0.0-beta.9",
+      "twbs/bootstrap": "github:twbs/bootstrap@^3.3.6"
     },
     "devDependencies": {
       "traceur": "github:jmcriffey/bower-traceur@0.0.88",
