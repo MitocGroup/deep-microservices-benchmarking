@@ -24,22 +24,20 @@
 <br/>
 
 <div>
-    <table datatable="ng" class="row-border hover">
-        <thead>
-        <tr>
-            <th class="dt-body-center">Request #</th>
-            <th class="dt-head-center">Start time</th>
-            <th class="dt-head-center">Stop time</th>
-            <th class="dt-head-center">Duration (ms)</th>
+    <table ng-table="main.tableParams" class="table table-condensed table-bordered table-striped" show-filter="false">
+        <tr ng-repeat="request in $data">
+            <td title="'Request #'" filter="{ index: 'number'}" sortable="'index'">
+                {{ request.index }}
+            </td>
+            <td title="'Start time'" filter="{ start: 'number'}" sortable="'start'">
+                {{ request.start| date:'HH:mm:ss.sss' }}
+            </td>
+            <td title="'Stop time'" filter="{ stop: 'number'}" sortable="'stop'">
+                {{ request.stop| date:'HH:mm:ss.sss' }}
+            </td>
+            <td title="'Duration (ms)'" filter="{ duration: 'number'}" sortable="'duration'">
+                {{ request.duration }}
+            </td>
         </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="request in main.resultsStack[main.workingResource]">
-            <td class="dt-body-center">{{ request.index }}</td>
-            <td class="dt-body-center">{{ request.start| date:'HH:mm:ss.sss' }}</td>
-            <td class="dt-body-center">{{ request.stop| date:'HH:mm:ss.sss' }}</td>
-            <td class="dt-body-center">{{ request.duration }}</td>
-        </tr>
-        </tbody>
     </table>
 </div>

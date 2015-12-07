@@ -7,8 +7,9 @@
 import moduleName from '../name';
 
 export class MainController {
-  constructor($scope) {
+  constructor($scope, NgTableParams) {
     this._$scope = $scope;
+    this._NgTableParams = NgTableParams;
     this._deepResource = DeepFramework.Kernel.get('resource');
 
     this.config = {
@@ -29,6 +30,10 @@ export class MainController {
     this.loadingText = 'Loading...';
 
     this._invokeResource(resourceId, payload, this.config.loops, this.config.interval, (resourceRequests) => {
+      this.tableParams = new this._NgTableParams({}, {
+        dataset: resourceRequests
+      });
+
       this.resultsStack[resourceId] = resourceRequests;
       this.loadingText = `Result for "${resourceId}"`;
       this._$scope.$digest();
@@ -135,7 +140,7 @@ export class MainController {
 }
 
 angular.module(moduleName).controller('MainController',
-  ['$scope', function(...args) {
+  ['$scope', 'NgTableParams', function(...args) {
     return new MainController(...args);
   },]
 );

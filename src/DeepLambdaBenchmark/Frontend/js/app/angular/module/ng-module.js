@@ -3,5 +3,5 @@
 
 export default [
   'ui.router',
-  'datatables',
+  'ngTable'
 ];
