@@ -1,0 +1,52 @@
+{
+  "case": {
+    "without-babel": {
+      "description": "testing lambda performance",
+      "type": "lambda",
+      "methods": [
+        "GET"
+      ],
+      "source": "src/CaseWithoutBabel"
+    },
+    "with-babel": {
+      "description": "testing lambda performance",
+      "type": "lambda",
+      "methods": [
+        "GET"
+      ],
+      "source": "src/CaseWithBabel"
+    },
+    "unused-code": {
+      "description": "testing lambda performance",
+      "type": "lambda",
+      "methods": [
+        "GET"
+      ],
+      "source": "src/CaseUnusedCode"
+    },
+    "used-code": {
+      "description": "testing lambda performance",
+      "type": "lambda",
+      "methods": [
+        "GET"
+      ],
+      "source": "src/CaseUsedCode"
+    },
+    "with-framework": {
+      "description": "testing lambda performance",
+      "type": "lambda",
+      "methods": [
+        "GET"
+      ],
+      "source": "src/CaseWithFramework"
+    },
+    "without-framework": {
+      "description": "testing lambda performance",
+      "type": "lambda",
+      "methods": [
+        "GET"
+      ],
+      "source": "src/CaseWithoutFramework"
+    }
+  }
+}
