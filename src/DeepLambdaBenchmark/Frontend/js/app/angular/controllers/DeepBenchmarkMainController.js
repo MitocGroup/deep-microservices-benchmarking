@@ -6,7 +6,7 @@
 
 import moduleName from '../name';
 
-export class MainController {
+export class DeepBenchmarkMainController {
   constructor($scope, NgTableParams) {
     this._$scope = $scope;
     this._NgTableParams = NgTableParams;
@@ -165,8 +165,8 @@ export class MainController {
   }
 }
 
-angular.module(moduleName).controller('MainController',
+angular.module(moduleName).controller('DeepBenchmarkMainController',
   ['$scope', 'NgTableParams', function(...args) {
-    return new MainController(...args);
+    return new DeepBenchmarkMainController(...args);
   },]
 );
