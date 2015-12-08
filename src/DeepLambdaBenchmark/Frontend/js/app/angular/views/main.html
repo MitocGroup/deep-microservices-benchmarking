@@ -1,73 +1,77 @@
 <div class="container-fluid">
-    <form name="controls">
-        <h1>Lambdas Benchmark</h1>
+    <div class="row">
+        <div class="col-md-12">
+            <form name="controls">
+                <h1>Lambdas Benchmark</h1>
 
-        <label>Loops:</label>
-        <input ng-model="main.config.loops" type="number" name="loops" />
+                <label>Loops:</label>
+                <input ng-model="main.config.loops" type="number" name="loops" />
 
-        <label>Interval(ms)</label>
-        <input ng-model="main.config.interval" type="number" name="interval" />
+                <label>Interval(ms)</label>
+                <input ng-model="main.config.interval" type="number" name="interval" />
 
-        <label>
-            <input type="radio" ng-model="main.config.gateway" value="{{ main.GATEWAY_LAMBDA }}">
-            Lambda
-        </label>
-        <label>
-            <input type="radio" ng-model="main.config.gateway" value="{{ main.GATEWAY_API }}">
-            API Gateway
-        </label>
-    </form>
-
-    <br />
-
-    <span style="color: red" ng-bind="main.errorText" ng-show="main.errorText"> {{ main.errorText }} </span>
-
-    <br />
-
-    <div ng-repeat="(msId, msResources) in main.resources" ng-show="msResources.length" >
-        <p>{{ msId }}</p>
-
-        <div ng-repeat="resourceId in msResources">
-            <form name="form_{{ $index }}" ng-submit="main.catchSubmit(resourceId)">
-                <label>{{ resourceId }}</label>
-                <input ng-show="msId !== main.BENCHMARKING_MS_ID" ng-model="main.payloads[resourceId]" type="text" name="payload" />
-
-                {{ resultSummary = main.getResultsSummary(resourceId);""}}
-                <b ng-if="resultSummary !== null">
-                    (min:{{ resultSummary.min }}, max:{{ resultSummary.max }}, avg:{{ resultSummary.avg }})
-                </b>
-                <input type="submit" value="Start"/>
+                <label>
+                    <input type="radio" ng-model="main.config.gateway" value="{{ main.GATEWAY_LAMBDA }}">
+                    Lambda
+                </label>
+                <label>
+                    <input type="radio" ng-model="main.config.gateway" value="{{ main.GATEWAY_API }}">
+                    API Gateway
+                </label>
             </form>
+
+            <br />
+
+            <span style="color: red" ng-bind="main.errorText" ng-show="main.errorText"> {{ main.errorText }} </span>
+            <p style="text-align: center" ng-bind="main.loadingText"></p>
+
+            <br/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div ng-repeat="(msId, msResources) in main.resources" ng-show="msResources.length" >
+                <p>{{ msId }}</p>
+
+                <div ng-repeat="resourceId in msResources">
+                    <form name="form_{{ $index }}" ng-submit="main.catchSubmit(resourceId)">
+                        <label>{{ resourceId }}</label>
+                        <input ng-show="msId !== main.BENCHMARKING_MS_ID" ng-model="main.payloads[resourceId]" type="text" name="payload" />
+
+                        {{ resultSummary = main.getResultsSummary(resourceId);""}}
+                        <b ng-if="resultSummary !== null">
+                            (min:{{ resultSummary.min }}, max:{{ resultSummary.max }}, avg:{{ resultSummary.avg }})
+                        </b>
+                        <input type="submit" value="Start"/>
+                    </form>
+                </div>
+
+                <br />
+            </div>
         </div>
 
-        <br />
-    </div>
-
-    <br/>
-    <p style="text-align: center" ng-bind="main.loadingText"></p>
-    <br/>
-
-    <div>
-        <table ng-table="main.tableParams" class="table table-bordered table-striped" show-filter="false">
-            <tr ng-repeat="request in $data">
-                <td title="'Request #'" sortable="'index'">
-                    {{ request.index }}
-                </td>
-                <td title="'Start time'" sortable="'start'">
-                    {{ request.start| date:'HH:mm:ss.sss' }}
-                </td>
-                <td title="'Stop time'" sortable="'stop'">
-                    {{ request.stop| date:'HH:mm:ss.sss' }}
-                </td>
-                <td title="'Duration (ms)'" sortable="'duration'">
-                    {{ request.duration }}
-                </td>
-                <td title="'Details'">
-                    <p ng-repeat="(actionName, durationMs) in request.internalDebug">
-                        {{ actionName }} : {{ durationMs }}
-                    </p>
-                </td>
-            </tr>
-        </table>
+        <div class="col-md-8">
+            <table ng-table="main.tableParams" class="table table-bordered table-striped" show-filter="false">
+                <tr ng-repeat="request in $data">
+                    <td title="'Request #'" sortable="'index'">
+                        {{ request.index }}
+                    </td>
+                    <td title="'Start time'" sortable="'start'">
+                        {{ request.start| date:'HH:mm:ss.sss' }}
+                    </td>
+                    <td title="'Stop time'" sortable="'stop'">
+                        {{ request.stop| date:'HH:mm:ss.sss' }}
+                    </td>
+                    <td title="'Duration (ms)'" sortable="'duration'">
+                        {{ request.duration }}
+                    </td>
+                    <td title="'Details'">
+                        <p ng-repeat="(actionName, durationMs) in request.internalDebug">
+                            {{ actionName }} : {{ durationMs }}
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
 </div>
