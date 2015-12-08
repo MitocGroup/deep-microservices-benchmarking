@@ -2,10 +2,19 @@
     <h1>Lambdas Benchmark</h1>
 
     <label>Loops:</label>
-    <input ng-model="main.config.loops" ng-pattern="/^\d+$/" name="loops" />
+    <input ng-model="main.config.loops" type="number" name="loops" />
 
     <label>Interval(ms)</label>
-    <input ng-model="main.config.interval" ng-pattern="/^\d+$/" name="interval" />
+    <input ng-model="main.config.interval" type="number" name="interval" />
+
+    <label>
+        <input type="radio" ng-model="main.config.gateway" value="{{ main.GATEWAY_LAMBDA }}">
+        Lambda
+    </label>
+    <label>
+        <input type="radio" ng-model="main.config.gateway" value="{{ main.GATEWAY_API }}">
+        API Gateway
+    </label>
 
     <div ng-repeat="resourceId in main.resources">
         <br />

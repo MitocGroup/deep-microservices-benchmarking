@@ -14,12 +14,27 @@ export class MainController {
 
     this.config = {
       loops: 2,
-      interval: 500
+      interval: 500,
+      gateway: this.GATEWAY_API,
     };
 
     this.resultsStack = {};
     this.loadingText = '';
     this.workingResource = null;
+  }
+
+  /**
+   * @returns {string}
+   */
+  get GATEWAY_LAMBDA() {
+    return 'lambda';
+  }
+
+  /**
+   * @returns {string}
+   */
+  get GATEWAY_API() {
+    return 'api';
   }
 
   catchSubmit(resourceId) {
@@ -29,7 +44,7 @@ export class MainController {
     this.resultsStack[resourceId] = [];
     this.loadingText = 'Loading...';
 
-    this._invokeResource(resourceId, payload, this.config.loops, this.config.interval, (resourceRequests) => {
+    this._invokeResource(resourceId, payload, this.config, (resourceRequests) => {
       this.tableParams = new this._NgTableParams({}, {
         dataset: resourceRequests
       });
@@ -71,10 +86,15 @@ export class MainController {
     return resourcesStack;
   }
 
-  _invokeResource(resourceId, payload, loops, intervalMs, callback) {
+  _invokeResource(resourceId, payload, config, callback) {
+    let loops = config.hasOwnProperty('loops') ? config.loops : 5;
+    let intervalMs = config.hasOwnProperty('interval') ? config.interval : 500;
+    let requestGateway = config.hasOwnProperty('gateway') ? config.gateway : this.GATEWAY_API;
+
     let requestsStack = [];
     let resourceAction = this._deepResource.get(resourceId);
     let receivedResponses = 0;
+    let _this = this;
 
     function execRequest(index = 0) {
         let requestInfo = {
@@ -82,7 +102,12 @@ export class MainController {
           start: new Date().getTime(),
         };
 
-        resourceAction.request(payload).disableCache().send((response) => {
+        let request = resourceAction.request(payload).disableCache();
+        if (requestGateway === _this.GATEWAY_LAMBDA) {
+          request.useDirectCall();
+        }
+
+        request.send((response) => {
           receivedResponses++;
 
           requestInfo.stop = new Date().getTime();
