@@ -1,5 +1,3 @@
-'use strict';
-
 import DeepFramework from 'deep-framework';
 import Handler from './Handler';
 

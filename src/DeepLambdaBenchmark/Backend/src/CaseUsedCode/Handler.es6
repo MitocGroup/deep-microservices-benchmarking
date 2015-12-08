@@ -1,5 +1,3 @@
-'use strict';
-
 import DeepFramework from 'deep-framework';
 import vogels from 'vogels';
 import joi from 'joi';

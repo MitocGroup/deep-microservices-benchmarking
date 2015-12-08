@@ -1,0 +1,36 @@
+{
+  "name": "without-framework",
+  "version": "0.0.1",
+  "description": "",
+  "author": {
+    "name": "Mitoc Group", 
+    "email": "hello@mitocgroup.com",
+    "website": "www.mitocgroup.com"
+  },
+  "contributors": [
+    {
+      "name": "DEEP Dev Team",
+      "email": "hello@deep.mg",
+      "website": "www.deep.mg"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/MitocGroup/deep/issues"
+  },
+  "keywords": [
+    "DEEP",
+    "Digital Enterprise End-To-End Platform",
+    "Hello World"
+  ],
+  "scripts": {
+    "postinstall": "npm run compile",
+    "compile": "deepify compile-es6 `pwd`"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.2.x"
+  },
+  "devDependencies": {
+  },
+  "preferGlobal": false,
+  "analyze": true
+}
