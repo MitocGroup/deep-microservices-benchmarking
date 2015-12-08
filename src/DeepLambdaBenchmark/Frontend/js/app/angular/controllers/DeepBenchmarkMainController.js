@@ -22,7 +22,15 @@ export class DeepBenchmarkMainController {
     this.payloads = {};
     this.errorText = '';
     this.loadingText = '';
+    this.resources = this._resources();
     this.workingResource = null;
+  }
+
+  /**
+   * @returns {string}
+   */
+  get BENCHMARKING_MS_ID() {
+    return 'deep.lambda.benchmark';
   }
 
   /**
@@ -39,6 +47,10 @@ export class DeepBenchmarkMainController {
     return 'api';
   }
 
+  /**
+   * @param resourceId
+   * @returns {boolean}
+   */
   catchSubmit(resourceId) {
     let payload = {};
 
@@ -68,14 +80,19 @@ export class DeepBenchmarkMainController {
     });
   }
 
-  get resources() {
-    let resourcesStack = [];
+  /**
+   * @returns {Object}
+   */
+  _resources() {
+    let resourcesStack = {};
     let deepResources = this._deepResource._resources;
 
     for (let msId in deepResources) {
       if (!deepResources.hasOwnProperty(msId)) {
         continue;
       }
+
+      resourcesStack[msId] = [];
 
       let msResources = deepResources[msId];
 
@@ -91,7 +108,7 @@ export class DeepBenchmarkMainController {
             continue;
           }
 
-          resourcesStack.push(`@${msId}:${resourceId}:${actionId}`);
+          resourcesStack[msId].push(`${msId}:${resourceId}:${actionId}`);
         }
       }
     }
@@ -99,13 +116,20 @@ export class DeepBenchmarkMainController {
     return resourcesStack;
   }
 
+  /**
+   * @param resourceId
+   * @param payload
+   * @param config
+   * @param callback
+   * @private
+   */
   _invokeResource(resourceId, payload, config, callback) {
     let loops = config.hasOwnProperty('loops') ? config.loops : 5;
     let intervalMs = config.hasOwnProperty('interval') ? config.interval : 500;
     let requestGateway = config.hasOwnProperty('gateway') ? config.gateway : this.GATEWAY_API;
 
     let requestsStack = [];
-    let resourceAction = this._deepResource.get(resourceId);
+    let resourceAction = this._deepResource.get(`@${resourceId}`);
     let receivedResponses = 0;
     let _this = this;
 

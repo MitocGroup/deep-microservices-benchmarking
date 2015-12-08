@@ -24,17 +24,21 @@
 
     <br />
 
-    <div ng-repeat="resourceId in main.resources">
-        <form name="form_{{ $index }}" ng-submit="main.catchSubmit(resourceId)">
-            <label>{{ resourceId }}</label>
-            <input ng-model="main.payloads[resourceId]" type="text" name="payload" />
+    <div ng-repeat="(msId, msResources) in main.resources" ng-show="msResources.length" >
+        <p>{{ msId }}</p>
 
-            {{ resultSummary = main.getResultsSummary(resourceId);""}}
-            <b ng-if="resultSummary !== null">
-                (min:{{ resultSummary.min }}, max:{{ resultSummary.max }}, avg:{{ resultSummary.avg }})
-            </b>
-            <input type="submit" value="Start"/>
-        </form>
+        <div ng-repeat="resourceId in msResources">
+            <form name="form_{{ $index }}" ng-submit="main.catchSubmit(resourceId)">
+                <label>{{ resourceId }}</label>
+                <input ng-show="msId !== main.BENCHMARKING_MS_ID" ng-model="main.payloads[resourceId]" type="text" name="payload" />
+
+                {{ resultSummary = main.getResultsSummary(resourceId);""}}
+                <b ng-if="resultSummary !== null">
+                    (min:{{ resultSummary.min }}, max:{{ resultSummary.max }}, avg:{{ resultSummary.avg }})
+                </b>
+                <input type="submit" value="Start"/>
+            </form>
+        </div>
 
         <br />
     </div>
@@ -63,7 +67,7 @@
                         {{ actionName }} : {{ durationMs }}
                     </p>
                 </td>
-            </p>
+            </tr>
         </table>
     </div>
 </div>
