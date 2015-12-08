@@ -29,17 +29,18 @@
   "dependencies": {
     "deep-framework": "^1.x.x",
 
-    "vogels": "*",
-    "joi": "*",
-    "babel-polyfill": "*",
-    "aws-sdk": "*",
-    "chai": "*",
-    "sinon": "*",
-    "sinon-chai": "*",
-    "ioredis": "*",
-    "store": "*",
-    "fs-extra": "*",
-    "superagent":"*"
+    "deep-db": "^0.x.x",
+    "deep-validation": "0.x.x",
+    "deep-core": "0.x.x",
+    "deep-fs": "0.x.x",
+    "deep-security": "0.x.x",
+    "deep-resource": "0.x.x",
+    "joi": "^4.x.x",
+    "vogels": "^0.x.x",
+    "aws-sdk": "^1.x.x",
+    "babel-polyfill": "^6.x.x",
+    "dynalite": "^0.x.x",
+    "local-dynamo": "MitocGroup/local-dynamo"
   },
   "devDependencies": {
   },
