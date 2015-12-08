@@ -1,6 +1,6 @@
 'use strict';
 
-import aws from 'aws-sdk';
+import AWS from 'aws-sdk';
 
 export default class {
   /**
@@ -62,10 +62,10 @@ export default class {
    */
   persistPayloadInFs(payload, callback) {
     let s3 = new AWS.S3();
-    let bucketName = `${this._config.buckets.system}/${this._config.microserviceIdentifier}`;
+    let bucketName = `${this._config.buckets.system.name}/${this._config.microserviceIdentifier}`;
 
     let params = {
-      Bucket: this._config.buckets.system,
+      Bucket: bucketName,
       Key: `request_payload_${(new Date()).toISOString()}`,
       Body: JSON.stringify(payload)
     };
@@ -91,7 +91,14 @@ export default class {
 
     let params = {
       TableName: tableName,
-      Item: payload,
+      Item: {
+        Id: {
+          S: "fake-id-" + new Date().getTime()
+        },
+        Name: {
+          S: payload.Name
+        }
+      },
     };
 
     dynamoDb.putItem(params, (error, data) => {
