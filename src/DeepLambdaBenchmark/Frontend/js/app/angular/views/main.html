@@ -1,25 +1,33 @@
 <div class="container-fluid">
-    <h1>Lambdas Benchmark</h1>
+    <form name="controls">
+        <h1>Lambdas Benchmark</h1>
 
-    <label>Loops:</label>
-    <input ng-model="main.config.loops" type="number" name="loops" />
+        <label>Loops:</label>
+        <input ng-model="main.config.loops" type="number" name="loops" />
 
-    <label>Interval(ms)</label>
-    <input ng-model="main.config.interval" type="number" name="interval" />
+        <label>Interval(ms)</label>
+        <input ng-model="main.config.interval" type="number" name="interval" />
 
-    <label>
-        <input type="radio" ng-model="main.config.gateway" value="{{ main.GATEWAY_LAMBDA }}">
-        Lambda
-    </label>
-    <label>
-        <input type="radio" ng-model="main.config.gateway" value="{{ main.GATEWAY_API }}">
-        API Gateway
-    </label>
+        <label>
+            <input type="radio" ng-model="main.config.gateway" value="{{ main.GATEWAY_LAMBDA }}">
+            Lambda
+        </label>
+        <label>
+            <input type="radio" ng-model="main.config.gateway" value="{{ main.GATEWAY_API }}">
+            API Gateway
+        </label>
+    </form>
+
+    <br />
+
+    <span style="color: red" ng-bind="main.errorText" ng-show="main.errorText"> {{ main.errorText }} </span>
+
+    <br />
 
     <div ng-repeat="resourceId in main.resources">
-        <br />
-        <form name="{{ resourceId }}" ng-submit="main.catchSubmit(resourceId)">
-            {{ resourceId }}
+        <form name="form_{{ $index }}" ng-submit="main.catchSubmit(resourceId)">
+            <label>{{ resourceId }}</label>
+            <input ng-model="main.payloads[resourceId]" type="text" name="payload" />
 
             {{ resultSummary = main.getResultsSummary(resourceId);""}}
             <b ng-if="resultSummary !== null">
@@ -27,6 +35,8 @@
             </b>
             <input type="submit" value="Start"/>
         </form>
+
+        <br />
     </div>
 
     <br/>

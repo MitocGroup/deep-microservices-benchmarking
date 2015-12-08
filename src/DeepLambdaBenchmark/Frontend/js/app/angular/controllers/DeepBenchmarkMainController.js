@@ -19,6 +19,8 @@ export class DeepBenchmarkMainController {
     };
 
     this.resultsStack = {};
+    this.payloads = {};
+    this.errorText = '';
     this.loadingText = '';
     this.workingResource = null;
   }
@@ -40,8 +42,19 @@ export class DeepBenchmarkMainController {
   catchSubmit(resourceId) {
     let payload = {};
 
+    if (this.payloads.hasOwnProperty(resourceId)) {
+      try {
+        payload = eval(`(${this.payloads[resourceId]})`);
+      } catch (e) {
+        // @todo - remove error message when input is changed
+        this.errorText = `Invalid payload. Make sure it's a valid JSON object`;
+        return false;
+      }
+    }
+
     this.workingResource = resourceId;
     this.resultsStack[resourceId] = [];
+    this.errorText = '';
     this.loadingText = 'Loading...';
 
     this._invokeResource(resourceId, payload, this.config, (resourceRequests) => {
