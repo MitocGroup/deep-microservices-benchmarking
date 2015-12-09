@@ -11,7 +11,6 @@ import resource from 'deep-resource';
 import joi from 'joi';
 import vogels from 'vogels';
 import aws from 'aws-sdk';
-import babel from 'babel-polyfill';
 import dynalite from 'dynalite';
 import localdynamo from 'local-dynamo';
 

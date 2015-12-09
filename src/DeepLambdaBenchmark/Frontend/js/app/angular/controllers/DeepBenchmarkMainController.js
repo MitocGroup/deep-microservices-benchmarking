@@ -6,7 +6,7 @@
 
 import moduleName from '../name';
 
-export class MainController {
+export class DeepBenchmarkMainController {
   constructor($scope, NgTableParams) {
     this._$scope = $scope;
     this._NgTableParams = NgTableParams;
@@ -19,8 +19,18 @@ export class MainController {
     };
 
     this.resultsStack = {};
+    this.payloads = {};
+    this.errorText = '';
     this.loadingText = '';
+    this.resources = this._resources();
     this.workingResource = null;
+  }
+
+  /**
+   * @returns {string}
+   */
+  get BENCHMARKING_MS_ID() {
+    return 'deep.lambda.benchmark';
   }
 
   /**
@@ -37,11 +47,26 @@ export class MainController {
     return 'api';
   }
 
+  /**
+   * @param resourceId
+   * @returns {boolean}
+   */
   catchSubmit(resourceId) {
     let payload = {};
 
+    if (this.payloads.hasOwnProperty(resourceId)) {
+      try {
+        payload = eval(`(${this.payloads[resourceId]})`);
+      } catch (e) {
+        // @todo - remove error message when input is changed
+        this.errorText = `Invalid payload. Make sure it's a valid JSON object`;
+        return false;
+      }
+    }
+
     this.workingResource = resourceId;
     this.resultsStack[resourceId] = [];
+    this.errorText = '';
     this.loadingText = 'Loading...';
 
     this._invokeResource(resourceId, payload, this.config, (resourceRequests) => {
@@ -55,14 +80,19 @@ export class MainController {
     });
   }
 
-  get resources() {
-    let resourcesStack = [];
+  /**
+   * @returns {Object}
+   */
+  _resources() {
+    let resourcesStack = {};
     let deepResources = this._deepResource._resources;
 
     for (let msId in deepResources) {
       if (!deepResources.hasOwnProperty(msId)) {
         continue;
       }
+
+      resourcesStack[msId] = [];
 
       let msResources = deepResources[msId];
 
@@ -78,7 +108,7 @@ export class MainController {
             continue;
           }
 
-          resourcesStack.push(`@${msId}:${resourceId}:${actionId}`);
+          resourcesStack[msId].push(`${msId}:${resourceId}:${actionId}`);
         }
       }
     }
@@ -86,13 +116,20 @@ export class MainController {
     return resourcesStack;
   }
 
+  /**
+   * @param resourceId
+   * @param payload
+   * @param config
+   * @param callback
+   * @private
+   */
   _invokeResource(resourceId, payload, config, callback) {
     let loops = config.hasOwnProperty('loops') ? config.loops : 5;
     let intervalMs = config.hasOwnProperty('interval') ? config.interval : 500;
     let requestGateway = config.hasOwnProperty('gateway') ? config.gateway : this.GATEWAY_API;
 
     let requestsStack = [];
-    let resourceAction = this._deepResource.get(resourceId);
+    let resourceAction = this._deepResource.get(`@${resourceId}`);
     let receivedResponses = 0;
     let _this = this;
 
@@ -165,8 +202,8 @@ export class MainController {
   }
 }
 
-angular.module(moduleName).controller('MainController',
+angular.module(moduleName).controller('DeepBenchmarkMainController',
   ['$scope', 'NgTableParams', function(...args) {
-    return new MainController(...args);
+    return new DeepBenchmarkMainController(...args);
   },]
 );

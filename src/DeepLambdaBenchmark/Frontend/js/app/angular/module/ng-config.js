@@ -8,7 +8,5 @@ export default ['$stateProvider', '$urlRouterProvider',
     angular.forEach(Object.keys(routes), function routesRegister(stateName) {
       $stateProvider.state(stateName, routes[stateName]);
     });
-
-    $urlRouterProvider.otherwise(routes['main'].url);
   },
 ];
