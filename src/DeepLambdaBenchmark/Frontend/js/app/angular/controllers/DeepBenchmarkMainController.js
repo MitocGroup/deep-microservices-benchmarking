@@ -103,7 +103,11 @@ export class DeepBenchmarkMainController {
             continue;
           }
 
-          resourcesStack[msId].push(`${msId}:${resourceId}:${actionId}`);
+          let action = resourceActions[actionId];
+
+          if (action.type === 'lambda') {
+            resourcesStack[msId].push(`${msId}:${resourceId}:${actionId}`);
+          }
         }
       }
     }
