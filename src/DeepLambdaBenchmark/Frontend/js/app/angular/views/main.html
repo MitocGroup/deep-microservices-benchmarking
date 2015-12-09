@@ -31,11 +31,11 @@
     <div class="row">
         <div class="col-md-4">
             <div ng-repeat="(msId, msResources) in main.resources" ng-show="msResources.length" >
-                <p>{{ msId }}</p>
+                <label>{{ msId }} microservice resources</label>
 
                 <div ng-repeat="resourceId in msResources">
                     <form name="form_{{ $index }}" ng-submit="main.catchSubmit(resourceId)">
-                        <label>{{ resourceId }}</label>
+                        {{ resourceId }}
                         <input ng-show="msId !== main.BENCHMARKING_MS_ID" ng-model="main.payloads[resourceId]" type="text" name="payload" />
 
                         {{ resultSummary = main.getResultsSummary(resourceId);""}}
