@@ -51,26 +51,29 @@
         </div>
 
         <div class="col-md-8">
-            <table ng-table="main.tableParams" class="table table-bordered table-striped" show-filter="false">
-                <tr ng-repeat="request in $data">
-                    <td title="'Request #'" sortable="'index'">
-                        {{ request.index }}
-                    </td>
-                    <td title="'Start time'" sortable="'start'">
-                        {{ request.start| date:'HH:mm:ss.sss' }}
-                    </td>
-                    <td title="'Stop time'" sortable="'stop'">
-                        {{ request.stop| date:'HH:mm:ss.sss' }}
-                    </td>
-                    <td title="'Duration (ms)'" sortable="'duration'">
-                        {{ request.duration }}
-                    </td>
-                    <td title="'Details'">
-                        <p ng-repeat="(actionName, durationMs) in request.internalDebug">
-                            {{ actionName }} : {{ durationMs }}
-                        </p>
-                    </td>
-                </tr>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Request #</th>
+                        <th>Start time</th>
+                        <th>Stop time</th>
+                        <th>Duration (ms)</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="request in main.resultsStack[main.workingResource]">
+                        <td>{{request.index}}</td>
+                        <td>{{request.start| date:'HH:mm:ss.sss'}}</td>
+                        <td>{{request.stop| date:'HH:mm:ss.sss'}}</td>
+                        <td>{{request.duration}}</td>
+                        <td>
+                            <p ng-repeat="(actionName, durationMs) in request.internalDebug">
+                                {{ actionName }} : {{ durationMs }}
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
             </table>
         </div>
     </div>

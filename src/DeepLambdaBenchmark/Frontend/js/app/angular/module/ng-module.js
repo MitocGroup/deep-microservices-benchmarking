@@ -2,6 +2,5 @@
 'format es6';
 
 export default [
-  'ui.router',
-  'ngTable'
+  'ui.router'
 ];

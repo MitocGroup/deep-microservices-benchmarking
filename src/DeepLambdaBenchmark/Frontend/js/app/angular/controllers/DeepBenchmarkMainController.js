@@ -7,9 +7,8 @@
 import moduleName from '../name';
 
 export class DeepBenchmarkMainController {
-  constructor($scope, NgTableParams) {
+  constructor($scope) {
     this._$scope = $scope;
-    this._NgTableParams = NgTableParams;
     this._deepResource = DeepFramework.Kernel.get('resource');
 
     this.config = {
@@ -70,10 +69,6 @@ export class DeepBenchmarkMainController {
     this.loadingText = 'Loading...';
 
     this._invokeResource(resourceId, payload, this.config, (resourceRequests) => {
-      this.tableParams = new this._NgTableParams({}, {
-        dataset: resourceRequests
-      });
-
       this.resultsStack[resourceId] = resourceRequests;
       this.loadingText = `Result for "${resourceId}"`;
       this._$scope.$digest();
@@ -203,7 +198,7 @@ export class DeepBenchmarkMainController {
 }
 
 angular.module(moduleName).controller('DeepBenchmarkMainController',
-  ['$scope', 'NgTableParams', function(...args) {
+  ['$scope', function(...args) {
     return new DeepBenchmarkMainController(...args);
   },]
 );
