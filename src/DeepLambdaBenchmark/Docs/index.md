@@ -1,4 +1,0 @@
-Lambda Benchmark MicroService
-=============================
-
-TBU
