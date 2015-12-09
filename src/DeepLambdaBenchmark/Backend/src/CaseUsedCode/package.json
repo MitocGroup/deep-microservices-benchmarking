@@ -38,7 +38,6 @@
     "joi": "^4.x.x",
     "vogels": "^0.x.x",
     "aws-sdk": "^1.x.x",
-    "babel-polyfill": "^6.x.x",
     "dynalite": "^0.x.x",
     "local-dynamo": "MitocGroup/local-dynamo"
   },
