@@ -1,3 +1,19 @@
+<style>
+    .table {
+        width: 100%;
+        max-width: 100%;
+        background-color: transparent;
+        border-spacing: 0;
+        border-collapse: collapse;
+        border: 1px solid #ddd;
+        text-align: center;
+    }
+
+    .table-bordered>thead>tr>th, .table-bordered>tbody>tr>td {
+        border: 1px solid #ddd;
+    }
+</style>
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
@@ -19,19 +35,14 @@
                     API Gateway
                 </label>
             </form>
-
-            <br />
-
-            <span style="color: red" ng-bind="main.errorText" ng-show="main.errorText"> {{ main.errorText }} </span>
-            <p style="text-align: center" ng-bind="main.loadingText"></p>
-
-            <br/>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-12">
             <div ng-repeat="(msId, msResources) in main.resources" ng-show="msResources.length" >
-                <label>{{ msId }} microservice resources</label>
+                <br />
+                <b>{{ msId }} microservice resources</b>
+                <br /><br />
 
                 <div ng-repeat="resourceId in msResources">
                     <form name="form_{{ $index }}" ng-submit="main.catchSubmit(resourceId)">
@@ -45,13 +56,20 @@
                         <input type="submit" value="Start"/>
                     </form>
                 </div>
-
-                <br />
             </div>
         </div>
-
-        <div class="col-md-8">
-            <table class="table table-striped">
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <br />
+            <span style="color: red" ng-bind="main.errorText" ng-show="main.errorText"> {{ main.errorText }} </span>
+            <p style="text-align: center" ng-bind="main.loadingText"></p>
+            <br/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered">
                 <thead>
                     <tr>
                         <th>Request #</th>
