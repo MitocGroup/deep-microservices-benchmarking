@@ -7,9 +7,11 @@
 import moduleName from '../name';
 
 export class DeepBenchmarkingMainController {
-  constructor($scope) {
+  constructor($scope, $location, $anchorScroll) {
     this._$scope = $scope;
     this._deepResource = DeepFramework.Kernel.get('resource');
+    this._$location = $location;
+    this._$anchorScroll = $anchorScroll;
 
     this.config = {
       loops: 2,
@@ -23,6 +25,7 @@ export class DeepBenchmarkingMainController {
     this.loadingText = '';
     this.resources = this._resources();
     this.workingResource = null;
+    this.busy = [];
   }
 
   /**
@@ -67,11 +70,15 @@ export class DeepBenchmarkingMainController {
     this.resultsStack[resourceId] = [];
     this.errorText = '';
     this.loadingText = 'Loading...';
+    this.busy[resourceId] = true;
 
     this._invokeResource(resourceId, payload, this.config, (resourceRequests) => {
       this.resultsStack[resourceId] = resourceRequests;
+      this.busy[resourceId] = false;
       this.loadingText = `Result for "${resourceId}"`;
       this._$scope.$digest();
+      this._$location.hash('results');
+      this._$anchorScroll();
     });
   }
 
@@ -202,7 +209,7 @@ export class DeepBenchmarkingMainController {
 }
 
 angular.module(moduleName).controller('DeepBenchmarkingMainController',
-  ['$scope', function(...args) {
+  ['$scope', '$location', '$anchorScroll', function(...args) {
     return new DeepBenchmarkingMainController(...args);
   },]
 );

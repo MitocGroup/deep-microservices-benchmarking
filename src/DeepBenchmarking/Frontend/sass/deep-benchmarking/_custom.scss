@@ -1,0 +1,74 @@
+.container {
+  margin: 0 auto;
+  width: 60%;
+}
+
+.table {
+  background-color: #fff;
+  border-collapse: collapse;
+  border: 1px solid #ddd;
+  width: 100%;
+  text-align: center;
+  &.table-bordered {
+    &>thead>tr>th, &>tbody>tr>td {
+      border: 1px solid #ddd;
+      padding: 7px;
+    }
+  }
+}
+
+.title {
+  text-align: center;
+  border-bottom: 1px dashed #999;
+  padding-bottom: 20px;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: #000;
+}
+
+.parameters {
+  padding-bottom: 5px;
+  .intervals {
+    input {
+      display: inline-block;
+    }
+  }
+  .config-options {
+    float: right;
+  }
+  .intervals, .config-options {
+    display: inline-block;
+  }
+}
+
+.resource-name {
+  display: block;
+  border-top: 1px dashed #ccc;
+  border-bottom: 1px dashed #ccc;
+  font-size: 16px;
+  padding: 20px 0;
+  margin: 20px 0;
+  text-align: center;
+  .loading-text {
+    margin: 0;
+  }
+}
+
+.resources-form {
+  position: relative;
+  height: 40px;
+  .custom-button {
+    position: absolute;
+    right: 0;
+  }
+  small {
+    color: #34A791;
+  }
+  .payload {
+    position: absolute;
+    right: 110px;
+    top: 0;
+  }
+}
+

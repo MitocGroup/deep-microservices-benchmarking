@@ -1,0 +1,117 @@
+div.radio-div {
+  margin: 5px 0 10px 10px;
+  display: inline-block; }
+  div.radio-div input[type="radio"] {
+    display: none; }
+    div.radio-div input[type="radio"] + label {
+      color: #292321;
+      font-size: 14px; }
+      div.radio-div input[type="radio"] + label span {
+        display: inline-block;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        -moz-border-radius: 50%;
+        border-radius: 50%;
+        cursor: pointer;
+        width: 22px;
+        height: 22px;
+        margin: -1px 4px 0 0;
+        vertical-align: middle; }
+    div.radio-div input[type="radio"]:checked + label span:after {
+      content: '';
+      display: block;
+      background-color: #34a792;
+      border-radius: 50%;
+      margin: 5px auto 0;
+      width: 12px;
+      height: 12px; }
+
+.custom-button {
+  background-color: #34a792;
+  border: 1px solid #31a38c;
+  display: inline-block;
+  cursor: pointer;
+  color: #fff;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 6px 12px;
+  text-decoration: none;
+  text-transform: uppercase; }
+  .custom-button:hover {
+    background-color: #44b8a1; }
+  .custom-button:active {
+    position: relative;
+    top: 1px; }
+  .custom-button:disabled {
+    background-color: #eee;
+    border-color: #dadada;
+    color: #ccc;
+    cursor: default; }
+
+.input-style input[type="text"] {
+  padding: 10px;
+  border: solid 1px #dcdcdc;
+  transition: box-shadow 0.3s, border 0.3s; }
+  .input-style input[type="text"]:focus {
+    outline: none; }
+  .input-style input[type="text"]:focus, .input-style input[type="text"].focus {
+    border: solid 1px #707070;
+    box-shadow: 0 0 5px 1px #969696; }
+
+.container {
+  margin: 0 auto;
+  width: 60%; }
+
+.table {
+  background-color: #fff;
+  border-collapse: collapse;
+  border: 1px solid #ddd;
+  width: 100%;
+  text-align: center; }
+  .table.table-bordered > thead > tr > th, .table.table-bordered > tbody > tr > td {
+    border: 1px solid #ddd;
+    padding: 7px; }
+
+.title {
+  text-align: center;
+  border-bottom: 1px dashed #999;
+  padding-bottom: 20px;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: #000; }
+
+.parameters {
+  padding-bottom: 5px; }
+  .parameters .intervals input {
+    display: inline-block; }
+  .parameters .config-options {
+    float: right; }
+  .parameters .intervals, .parameters .config-options {
+    display: inline-block; }
+
+.resource-name {
+  display: block;
+  border-top: 1px dashed #ccc;
+  border-bottom: 1px dashed #ccc;
+  font-size: 16px;
+  padding: 20px 0;
+  margin: 20px 0;
+  text-align: center; }
+  .resource-name .loading-text {
+    margin: 0; }
+
+.resources-form {
+  position: relative;
+  height: 40px; }
+  .resources-form .custom-button {
+    position: absolute;
+    right: 0; }
+  .resources-form small {
+    color: #34A791; }
+  .resources-form .payload {
+    position: absolute;
+    right: 110px;
+    top: 0; }
+
+/*# sourceMappingURL=main.min.css.map */
