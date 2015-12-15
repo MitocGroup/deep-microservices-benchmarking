@@ -58,9 +58,17 @@ div.radio-div {
     border: solid 1px #707070;
     box-shadow: 0 0 5px 1px #969696; }
 
+body.custom-body {
+  max-width: 100%;
+  padding-bottom: 30px; }
+
 .container {
   margin: 0 auto;
-  width: 60%; }
+  width: 70%; }
+
+div[ui-view="todo"] {
+  margin: 0 auto;
+  max-width: 550px; }
 
 .table {
   background-color: #fff;
