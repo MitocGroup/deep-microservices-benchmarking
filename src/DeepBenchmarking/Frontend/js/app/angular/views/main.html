@@ -21,24 +21,24 @@
                     <label for="api"><span></span>API Gateway</label>
                 </div>
             </div>
+
+            <div class="clearfix"></div>
         </div>
     </form>
     <div ng-repeat="(msId, msResources) in main.resources" ng-show="msResources.length" >
 
-        <strong class="resource-name">{{ msId }} microservice resources</strong>
+        <strong class="resource-name">{{ msId }} microservices (from resources.json)</strong>
 
-        <div ng-repeat="resourceId in msResources">
-            <form class="resources-form input-style" name="form_{{ $index }}" ng-submit="main.catchSubmit(resourceId)">
-                {{ resourceId }}
-                <input class="payload" ng-show="msId !== main.BENCHMARKING_MS_ID"
+        <div class="resources-form" ng-repeat="resourceId in msResources">
+            <form class="input-style" name="form_{{ $index }}" ng-submit="main.catchSubmit(resourceId)">
+                <p class="resource-id float-left">{{ resourceId }}</p>
+                <input class="payload float-right" ng-show="msId !== main.BENCHMARKING_MS_ID"
                        ng-model="main.payloads[resourceId]"
                        type="text" name="payload" placeholder="payload..." />
 
                 {{ resultSummary = main.getResultsSummary(resourceId);""}}
-                <b ng-if="resultSummary !== null">
-                    <small>(min:{{ resultSummary.min }}, max:{{ resultSummary.max }}, avg:{{ resultSummary.avg }})</small>
-                </b>
-                <button class="custom-button" type="submit" ng-disabled="main.busy[resourceId]" value="Start">Start</button>
+                <small ng-if="resultSummary !== null">(min:{{ resultSummary.min }}, max:{{ resultSummary.max }}, avg:{{ resultSummary.avg }})</small>
+                <button class="custom-button float-left" type="submit" ng-disabled="main.busy[resourceId]" value="Start"><i class="start-icon"></i><span class="button-label">Start</span></button>
             </form>
         </div>
     </div>
@@ -47,7 +47,7 @@
             <span class="error" ng-bind="main.errorText" ng-show="main.errorText"> {{ main.errorText }} </span>
             <p class="loading-text" ng-bind="main.loadingText"></p>
         </div>
-        <table class="table table-bordered">
+        <table class="rwd-table table table-bordered">
             <thead>
                 <tr>
                     <th>Request #</th>
@@ -59,11 +59,11 @@
             </thead>
             <tbody>
                 <tr ng-repeat="request in main.resultsStack[main.workingResource]">
-                    <td>{{request.index}}</td>
-                    <td>{{request.start| date:'HH:mm:ss.sss'}}</td>
-                    <td>{{request.stop| date:'HH:mm:ss.sss'}}</td>
-                    <td>{{request.duration}}</td>
-                    <td>
+                    <td data-th="Request #">{{request.index}}</td>
+                    <td data-th="Start time">{{request.start| date:'HH:mm:ss.sss'}}</td>
+                    <td data-th="Stop time">{{request.stop| date:'HH:mm:ss.sss'}}</td>
+                    <td data-th="Duration (ms)">{{request.duration}}</td>
+                    <td data-th="Details">
                         <p ng-repeat="(actionName, durationMs) in request.internalDebug">
                             {{ actionName }} : {{ durationMs }}
                         </p>

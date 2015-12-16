@@ -8,12 +8,23 @@ body.custom-body {
   width: 70%;
 }
 
+.clearfix {
+  &:before,
+  &:after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
 div[ui-view="todo"] {
   margin: 0 auto;
   max-width: 550px;
 }
 
-.table {
+.rwd-table {
+  margin: 1em 0;
+  min-width: 300px;
   background-color: #fff;
   border-collapse: collapse;
   border: 1px solid #ddd;
@@ -23,6 +34,17 @@ div[ui-view="todo"] {
     &>thead>tr>th, &>tbody>tr>td {
       border: 1px solid #ddd;
       padding: 7px;
+    }
+  }
+  th {
+    display: none;
+  }
+  td {
+    display: block;
+    &:before {
+      content: attr(data-th)": ";
+      font-weight: bold;
+      display: inline-block;
     }
   }
 }
@@ -66,14 +88,27 @@ div[ui-view="todo"] {
 }
 
 .resources-form {
-  position: relative;
   height: 40px;
+  position: relative;
+  .resource-id {
+    float: left;
+    margin: 0;
+  }
   .custom-button {
+    float: right;
     position: absolute;
     right: 0;
+    top: 4px;
+    .button-label {
+      margin-left: 4px;
+    }
   }
   small {
     color: #34A791;
+    display: block;
+    float: left;
+    margin-left: 5px;
+    font-weight: bold;
   }
   .payload {
     position: absolute;
@@ -81,4 +116,15 @@ div[ui-view="todo"] {
     top: 0;
   }
 }
+
+.start-icon {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  vertical-align: middle;
+  background: url('../img/start-icon.png') center center no-repeat;
+  background-size: 100% 100%;
+  margin-top: -4px;
+}
+
 
