@@ -1,6 +1,16 @@
+body.custom-body {
+  max-width: 100%;
+  padding-bottom: 30px;
+}
+
 .container {
   margin: 0 auto;
-  width: 60%;
+  width: 70%;
+}
+
+div[ui-view="todo"] {
+  margin: 0 auto;
+  max-width: 550px;
 }
 
 .table {
