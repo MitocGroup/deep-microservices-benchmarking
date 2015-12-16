@@ -9,10 +9,8 @@ import fs from 'deep-fs';
 import security from 'deep-security';
 import resource from 'deep-resource';
 import joi from 'joi';
-import vogels from 'vogels';
 import aws from 'aws-sdk';
 import dynalite from 'dynalite';
-import localdynamo from 'local-dynamo';
 
 export default class extends DeepFramework.Core.AWS.Lambda.Runtime {
   /**
