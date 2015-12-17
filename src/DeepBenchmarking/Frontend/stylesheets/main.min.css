@@ -66,6 +66,12 @@ body.custom-body {
   margin: 0 auto;
   width: 70%; }
 
+.float-left {
+  float: left; }
+
+.float-right {
+  float: right; }
+
 .clearfix:before, .clearfix:after {
   content: '';
   display: table;
@@ -108,8 +114,6 @@ div[ui-view="todo"] {
   padding-bottom: 5px; }
   .parameters .intervals input {
     display: inline-block; }
-  .parameters .config-options {
-    float: right; }
   .parameters .intervals, .parameters .config-options {
     display: inline-block; }
 
@@ -125,28 +129,20 @@ div[ui-view="todo"] {
     margin: 0; }
 
 .resources-form {
-  height: 40px;
+  min-height: 40px;
   position: relative; }
+  .resources-form .resource-id-results, .resources-form .resources-actions {
+    width: 50%; }
   .resources-form .resource-id {
-    float: left;
     margin: 0; }
   .resources-form .custom-button {
-    float: right;
-    position: absolute;
-    right: 0;
-    top: 4px; }
+    margin-left: 10px; }
     .resources-form .custom-button .button-label {
       margin-left: 4px; }
   .resources-form small {
     color: #34A791;
-    display: block;
-    float: left;
     margin-left: 5px;
     font-weight: bold; }
-  .resources-form .payload {
-    position: absolute;
-    right: 110px;
-    top: 0; }
 
 .start-icon {
   display: inline-block;
@@ -157,14 +153,27 @@ div[ui-view="todo"] {
   background-size: 100% 100%;
   margin-top: -4px; }
 
-@media (max-width: 940px) {
+@media (max-width: 1215px) {
   .config-options {
     margin-top: 20px; } }
-@media (max-width: 768px) {
+@media (max-width: 1140px) {
+  .resources-form small {
+    width: 100%; } }
+@media (min-width: 900px) and (max-width: 1024px) {
+  .resources-form .button-label {
+    display: none; }
+  .resources-form .resource-id {
+    width: 170px; } }
+@media (max-width: 920px) {
   .parameters .intervals input {
     display: block;
-    margin-bottom: 5px; }
-
+    margin-bottom: 5px; } }
+@media (max-width: 850px) {
+  .resources-form .resource-id-results, .resources-form .resources-actions {
+    width: 100%; }
+  .resources-form .button-label {
+    display: none; } }
+@media (max-width: 768px) {
   .resources-form small {
     width: 100%;
     margin-left: 0; } }
@@ -177,13 +186,17 @@ div[ui-view="todo"] {
   .resources-form {
     min-height: 48px;
     margin-bottom: 10px; }
+    .resources-form .payload {
+      position: static;
+      float: left;
+      margin-top: 5px; }
+    .resources-form .custom-button {
+      position: absolute;
+      right: 0;
+      top: 2px; }
     .resources-form .resource-id {
-      word-break: break-word;
-      display: block;
-      width: 170px; }
-
-  .button-label {
-    display: none; }
+      width: 170px;
+      word-break: break-word; }
 
   .parameters .intervals input {
     width: 100%;

@@ -11,7 +11,7 @@
                 <input ng-model="main.config.interval" type="text" name="interval" />
             </div>
 
-            <div class="config-options">
+            <div class="config-options float-right">
                 <div class="radio-div">
                     <input type="radio" ng-model="main.config.gateway" value="{{ main.GATEWAY_LAMBDA }}" id="lambda"/>
                     <label for="lambda"><span></span>Lambda</label>
@@ -31,14 +31,21 @@
 
         <div class="resources-form" ng-repeat="resourceId in msResources">
             <form class="input-style" name="form_{{ $index }}" ng-submit="main.catchSubmit(resourceId)">
-                <p class="resource-id float-left">{{ resourceId }}</p>
-                <input class="payload float-right" ng-show="msId !== main.BENCHMARKING_MS_ID"
-                       ng-model="main.payloads[resourceId]"
-                       type="text" name="payload" placeholder="payload..." />
-
-                {{ resultSummary = main.getResultsSummary(resourceId);""}}
-                <small ng-if="resultSummary !== null">(min:{{ resultSummary.min }}, max:{{ resultSummary.max }}, avg:{{ resultSummary.avg }})</small>
-                <button class="custom-button float-left" type="submit" ng-disabled="main.busy[resourceId]" value="Start"><i class="start-icon"></i><span class="button-label">Start</span></button>
+                <div class="float-left resource-id-results">
+                    <p class="resource-id float-left">{{ resourceId }}</p>
+                    <small class="float-left" ng-if="resultSummary !== null">(min:{{ resultSummary.min }}, max:{{ resultSummary.max }}, avg:{{ resultSummary.avg }})</small>
+                </div>
+                <div class="float-right resources-actions">
+                    {{ resultSummary = main.getResultsSummary(resourceId);""}}
+                    <button class="custom-button float-right" type="submit" ng-disabled="main.busy[resourceId]" value="Start">
+                        <i class="start-icon"></i>
+                        <span class="button-label">Start</span>
+                    </button>
+                    <input class="payload float-right" ng-show="msId !== main.BENCHMARKING_MS_ID"
+                           ng-model="main.payloads[resourceId]"
+                           type="text" name="payload" placeholder="payload..." />
+                </div>
+                <div class="clearfix"></div>
             </form>
         </div>
     </div>
@@ -49,26 +56,26 @@
         </div>
         <table class="rwd-table table table-bordered">
             <thead>
-                <tr>
-                    <th>Request #</th>
-                    <th>Start time</th>
-                    <th>Stop time</th>
-                    <th>Duration (ms)</th>
-                    <th>Details</th>
-                </tr>
+            <tr>
+                <th>Request #</th>
+                <th>Start time</th>
+                <th>Stop time</th>
+                <th>Duration (ms)</th>
+                <th>Details</th>
+            </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="request in main.resultsStack[main.workingResource]">
-                    <td data-th="Request #">{{request.index}}</td>
-                    <td data-th="Start time">{{request.start| date:'HH:mm:ss.sss'}}</td>
-                    <td data-th="Stop time">{{request.stop| date:'HH:mm:ss.sss'}}</td>
-                    <td data-th="Duration (ms)">{{request.duration}}</td>
-                    <td data-th="Details">
-                        <p ng-repeat="(actionName, durationMs) in request.internalDebug">
-                            {{ actionName }} : {{ durationMs }}
-                        </p>
-                    </td>
-                </tr>
+            <tr ng-repeat="request in main.resultsStack[main.workingResource]">
+                <td data-th="Request #">{{request.index}}</td>
+                <td data-th="Start time">{{request.start| date:'HH:mm:ss.sss'}}</td>
+                <td data-th="Stop time">{{request.stop| date:'HH:mm:ss.sss'}}</td>
+                <td data-th="Duration (ms)">{{request.duration}}</td>
+                <td data-th="Details">
+                    <p ng-repeat="(actionName, durationMs) in request.internalDebug">
+                        {{ actionName }} : {{ durationMs }}
+                    </p>
+                </td>
+            </tr>
             </tbody>
         </table>
     </div>

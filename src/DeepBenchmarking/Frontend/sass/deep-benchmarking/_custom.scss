@@ -8,6 +8,14 @@ body.custom-body {
   width: 70%;
 }
 
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
+}
+
 .clearfix {
   &:before,
   &:after {
@@ -66,9 +74,6 @@ div[ui-view="todo"] {
       display: inline-block;
     }
   }
-  .config-options {
-    float: right;
-  }
   .intervals, .config-options {
     display: inline-block;
   }
@@ -88,32 +93,24 @@ div[ui-view="todo"] {
 }
 
 .resources-form {
-  height: 40px;
+  min-height: 40px;
   position: relative;
+  .resource-id-results, .resources-actions {
+    width: 50%;
+  }
   .resource-id {
-    float: left;
     margin: 0;
   }
   .custom-button {
-    float: right;
-    position: absolute;
-    right: 0;
-    top: 4px;
+    margin-left: 10px;
     .button-label {
       margin-left: 4px;
     }
   }
   small {
     color: #34A791;
-    display: block;
-    float: left;
     margin-left: 5px;
     font-weight: bold;
-  }
-  .payload {
-    position: absolute;
-    right: 110px;
-    top: 0;
   }
 }
 
@@ -126,5 +123,3 @@ div[ui-view="todo"] {
   background-size: 100% 100%;
   margin-top: -4px;
 }
-
-
