@@ -1,0 +1,125 @@
+body.custom-body {
+  max-width: 100%;
+  padding-bottom: 30px;
+}
+
+.container {
+  margin: 0 auto;
+  width: 70%;
+}
+
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
+}
+
+.clearfix {
+  &:before,
+  &:after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
+div[ui-view="todo"] {
+  margin: 0 auto;
+  max-width: 550px;
+}
+
+.rwd-table {
+  margin: 1em 0;
+  min-width: 300px;
+  background-color: #fff;
+  border-collapse: collapse;
+  border: 1px solid #ddd;
+  width: 100%;
+  text-align: center;
+  &.table-bordered {
+    &>thead>tr>th, &>tbody>tr>td {
+      border: 1px solid #ddd;
+      padding: 7px;
+    }
+  }
+  th {
+    display: none;
+  }
+  td {
+    display: block;
+    &:before {
+      content: attr(data-th)": ";
+      font-weight: bold;
+      display: inline-block;
+    }
+  }
+}
+
+.title {
+  text-align: center;
+  border-bottom: 1px dashed #999;
+  padding-bottom: 20px;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: #000;
+}
+
+.parameters {
+  padding-bottom: 5px;
+  .intervals {
+    input {
+      display: inline-block;
+    }
+  }
+  .intervals, .config-options {
+    display: inline-block;
+  }
+}
+
+.resource-name {
+  display: block;
+  border-top: 1px dashed #ccc;
+  border-bottom: 1px dashed #ccc;
+  font-size: 16px;
+  padding: 20px 0;
+  margin: 20px 0;
+  text-align: center;
+  .loading-text {
+    margin: 0;
+  }
+}
+
+.resources-form {
+  min-height: 40px;
+  position: relative;
+  .resource-id-results, .resources-actions {
+    width: 50%;
+  }
+  .resource-id {
+    margin: 0;
+  }
+  .custom-button {
+    margin-left: 10px;
+    .button-label {
+      margin-left: 4px;
+    }
+  }
+  small {
+    color: #34A791;
+    margin-left: 5px;
+    font-weight: bold;
+  }
+}
+
+.start-icon {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  vertical-align: middle;
+  background: url('../img/start-icon.png') center center no-repeat;
+  background-size: 100% 100%;
+  margin-top: -4px;
+}
