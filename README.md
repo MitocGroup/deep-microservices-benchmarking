@@ -5,12 +5,12 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/coverage/1ad2d529275e490cb61700b3c20f771a)](https://www.codacy.com/app/MitocGroup/deep-microservices-benchmarking)
 
 `DEEP Benchmarking` (https://github.com/MitocGroup/deep-microservices-benchmarking) is a microservice 
-that can be used to:
+that is built on top of (as well as bounded to) `DEEP ecosystem` and can be used to:
 
-1. either benchmark the performance of the resources used in your web app built on top of `DEEP ecosystem`
+1. either benchmark the performance of the resources used in your web app
 (e.g. [AWS Lambda](https://aws.amazon.com/lambda/), [Amazon API Gateway](https://aws.amazon.com/api-gateway/), etc.)
 
-2. or benchmark the performance of the microservices developed for your web app built on top of `DEEP ecosystem`
+2. or benchmark the performance of the microservices developed for your web app
 (e.g. [DEEP HelloWorld](https://github.com/MitocGroup/deep-microservices-helloworld),
 [DEEP Todo App](https://github.com/MitocGroup/deep-microservices-todo-app), etc.)
 
