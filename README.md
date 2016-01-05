@@ -27,7 +27,7 @@ the management of web apps built on top of DEEP ecosystem.
 2. Using deepify, pickup deep-benchmarking directly from GitHub:
 
   `deepify install https://github.com/MitocGroup/deep-microservices-benchmarking.git ~/deep-benchmarking`
-> deepify fetches benchmarking code source and unpack it locally
+> deepify fetches benchmarking source code and unpack it locally
 
 3. Using deepify, run locally the helloworld example:
 
