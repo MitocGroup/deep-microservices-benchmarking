@@ -184,6 +184,8 @@ export class DeepBenchmarkingMainController {
   getResultsSummary(resourceId) {
     let results = this.resultsStack.hasOwnProperty(resourceId) ? this.resultsStack[resourceId] : {};
     let durationArr = [];
+    let startArr = [];
+    let stopArr = [];
 
     for (let resultKey in results) {
       if (!results.hasOwnProperty(resultKey)) {
@@ -193,14 +195,22 @@ export class DeepBenchmarkingMainController {
       let result = results[resultKey];
 
       durationArr.push(result.duration);
+      startArr.push(result.start);
+      stopArr.push(result.stop);
     }
 
     let result = null;
     if (durationArr.length) {
+      let minStart = Math.min(...startArr);
+      let maxStop = Math.max(...stopArr);
+
       result = {
         min: Math.min(...durationArr),
         max: Math.max(...durationArr),
         avg: Math.round(durationArr.reduce((a, b) => a + b) / durationArr.length),
+        minStart: minStart,
+        maxStop: maxStop,
+        total: (maxStop - minStart) / 1000,
       };
     }
 

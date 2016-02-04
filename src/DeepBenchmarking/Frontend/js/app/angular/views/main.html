@@ -33,7 +33,9 @@
             <form class="input-style" name="form_{{ $index }}" ng-submit="main.catchSubmit(resourceId)">
                 <div class="float-left resource-id-results">
                     <p class="resource-id float-left">{{ resourceId }}</p>
-                    <small class="float-left" ng-if="resultSummary !== null">(min:{{ resultSummary.min }}, max:{{ resultSummary.max }}, avg:{{ resultSummary.avg }})</small>
+                    <small class="float-left" ng-if="resultSummary !== null">
+                        (min:{{ resultSummary.min }}, max:{{ resultSummary.max }}, avg:{{ resultSummary.avg }}, total(s): {{ resultSummary.total }})
+                    </small>
                 </div>
                 <div class="float-right resources-actions">
                     {{ resultSummary = main.getResultsSummary(resourceId);""}}
