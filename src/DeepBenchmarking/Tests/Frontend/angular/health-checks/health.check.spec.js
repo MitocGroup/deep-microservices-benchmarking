@@ -15,11 +15,11 @@ describe('Angular', function() {
     expect(angular.module('ui.router').name).toBe('ui.router');
   });
 
-  it('Should load ngMock', function() {
-    expect(typeof angular.mock.module).toBe('function');  //module is JavaScript reserved word
-    expect(typeof inject).toBe('function');
-    expect(typeof dump).toBe('function');
-  });
+  //it('Should load ngMock', function() {
+  //  expect(typeof angular.mock.module).toBe('function');  //module is JavaScript reserved word
+  //  expect(typeof inject).toBe('function');
+  //  expect(typeof dump).toBe('function');
+  //});
 });
 
 describe('Application', function() {
