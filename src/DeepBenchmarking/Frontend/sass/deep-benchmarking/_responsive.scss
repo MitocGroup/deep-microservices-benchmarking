@@ -1,0 +1,118 @@
+
+@media (max-width: 1215px) {
+  .config-options {
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 1140px) {
+  .resources-form {
+    small {
+      width: 100%;
+    }
+  }
+}
+
+@media (min-width: 900px) and (max-width: 1024px) {
+  .resources-form {
+    .button-label {
+      display: none;
+    }
+    .resource-id {
+      width: 170px;
+    }
+  }
+}
+
+@media (max-width: 920px) {
+  .parameters {
+    .intervals {
+      input {
+        display: block;
+        margin-bottom: 5px;
+      }
+    }
+  }
+}
+
+@media (max-width: 850px) {
+  .resources-form {
+    .resource-id-results, .resources-actions {
+      width: 100%;
+    }
+    .button-label {
+      display: none;
+    }
+  }
+}
+
+
+@media (max-width: 768px) {
+  .resources-form {
+    small {
+      width: 100%;
+      margin-left: 0;
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  .rwd-table {
+    min-width: 100%;
+    th, td {
+      text-align: left;
+    }
+  }
+  .resources-form {
+    min-height: 48px;
+    margin-bottom: 10px;
+    .payload {
+      position: static;
+      float: left;
+      margin-top: 5px;
+    }
+    .custom-button {
+      position: absolute;
+      right: 0;
+      top: 2px;
+    }
+    .resource-id {
+      width: 170px;
+      word-break: break-word;
+    }
+  }
+  .parameters {
+    .intervals {
+      input {
+        width: 100%;
+        margin: 5px 0 10px;
+      }
+    }
+    .intervals, .config-options {
+      display: block;
+    }
+  }
+}
+
+
+@media (min-width: 640px) {
+  .rwd-table {
+    td {
+      &:before {
+        display: none;
+      }
+    }
+    th, td {
+      display: table-cell;
+      padding: .25em .5em;
+
+      &:first-child {
+        padding-left: 0;
+      }
+
+      &:last-child {
+        padding-right: 0;
+      }
+    }
+  }
+}
