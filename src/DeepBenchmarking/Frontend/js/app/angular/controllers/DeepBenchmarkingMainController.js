@@ -157,6 +157,12 @@ export class DeepBenchmarkingMainController {
           requestInfo.duration = requestInfo.stop - requestInfo.start;
           requestInfo.internalDebug = !response.isError && response.data.hasOwnProperty('debug') ? response.data.debug : {};
 
+          if (response.logResult) {
+            let logInfo = _this._parseLogResult(response.logResult);
+
+            Object.assign(requestInfo.internalDebug, logInfo);
+          }
+
           requestsStack.push(requestInfo);
 
           if (receivedResponses == loops) {
@@ -174,6 +180,35 @@ export class DeepBenchmarkingMainController {
     };
 
     execRequest();
+  }
+
+  /**
+   * @param {String} logResult
+   * @sample:
+   * START RequestId: 89b188ef-eba6-11e5-ac37-73c94fe513a1 Version: $LATEST
+   * END RequestId: 89b188ef-eba6-11e5-ac37-73c94fe513a1
+   * REPORT RequestId: 89b188ef-eba6-11e5-ac37-73c94fe513a1    Duration: 0.52 ms    Billed Duration: 100 ms     Memory Size: 128 MB    Max Memory Used: 41 MB
+   */
+  _parseLogResult(logResult) {
+    let regexp = new RegExp(
+      'duration:\\s+([\\d\\.]+\\s+\\w+)\\s+' +        // executionTime
+      'billed\\s+duration:\\s+(\\d+\\s+\\w+)\\s+' +   // billedDuration
+      'memory\\s+size:\\s+\\d+\\s+\\w+\\s+' +         // memorySize
+      'max\\s+memory\\s+used:\\s+(\\d+\\s+\\w+)',     // maxMemoryUsed
+      'im'
+    );
+
+    let matches = logResult.match(regexp);
+
+    if (!matches) {
+      return {};
+    }
+
+    return {
+      executionTime: matches[1],
+      billedDuration: matches[2],
+      maxMemoryUsed: matches[3],
+    };
   }
 
   /**
