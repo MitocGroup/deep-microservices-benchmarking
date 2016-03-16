@@ -195,7 +195,7 @@ export class DeepBenchmarkingMainController {
       'billed\\s+duration:\\s+(\\d+\\s+\\w+)\\s+' +
       'memory\\s+size:\\s+\\d+\\s+\\w+\\s+' +
       'max\\s+memory\\s+used:\\s+(\\d+\\s+\\w+)',
-      'im'
+      'i'
     );
 
     let matches = logResult.match(regexp);
