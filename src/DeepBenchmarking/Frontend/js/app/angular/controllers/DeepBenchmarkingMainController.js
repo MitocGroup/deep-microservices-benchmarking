@@ -191,10 +191,10 @@ export class DeepBenchmarkingMainController {
    */
   _parseLogResult(logResult) {
     let regexp = new RegExp(
-      'duration:\\s+([\\d\\.]+\\s+\\w+)\\s+' +        // executionTime
-      'billed\\s+duration:\\s+(\\d+\\s+\\w+)\\s+' +   // billedDuration
-      'memory\\s+size:\\s+\\d+\\s+\\w+\\s+' +         // memorySize
-      'max\\s+memory\\s+used:\\s+(\\d+\\s+\\w+)',     // maxMemoryUsed
+      'duration:\\s+([\\d\\.]+\\s+\\w+)\\s+' +
+      'billed\\s+duration:\\s+(\\d+\\s+\\w+)\\s+' +
+      'memory\\s+size:\\s+\\d+\\s+\\w+\\s+' +
+      'max\\s+memory\\s+used:\\s+(\\d+\\s+\\w+)',
       'im'
     );
 
