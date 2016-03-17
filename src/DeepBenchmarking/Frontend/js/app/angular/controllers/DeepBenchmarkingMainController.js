@@ -147,7 +147,7 @@ export class DeepBenchmarkingMainController {
 
         let request = resourceAction.request(payload).disableCache();
         if (requestGateway === _this.GATEWAY_LAMBDA) {
-          request.useDirectCall();
+          request.useDirectCall(true);
         }
 
         request.send((response) => {
@@ -188,6 +188,8 @@ export class DeepBenchmarkingMainController {
    * START RequestId: 89b188ef-eba6-11e5-ac37-73c94fe513a1 Version: $LATEST
    * END RequestId: 89b188ef-eba6-11e5-ac37-73c94fe513a1
    * REPORT RequestId: 89b188ef-eba6-11e5-ac37-73c94fe513a1    Duration: 0.52 ms    Billed Duration: 100 ms     Memory Size: 128 MB    Max Memory Used: 41 MB
+   * @returns {*}
+   * @private
    */
   _parseLogResult(logResult) {
     let regexp = new RegExp(
@@ -205,7 +207,7 @@ export class DeepBenchmarkingMainController {
     }
 
     return {
-      executionTime: matches[1],
+      lambdaExecutionTime: matches[1],
       billedDuration: matches[2],
       maxMemoryUsed: matches[3],
     };
