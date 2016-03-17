@@ -208,10 +208,10 @@ export class DeepBenchmarkingMainController {
     }
 
     return {
-      lambdaExecutionDuration: matches[1],
-      billedDuration: matches[2],
-      memorySize: matches[3],
-      maxMemoryUsed: matches[4],
+      executionDuration: parseFloat(matches[1]),
+      billedDuration: parseFloat(matches[2]),
+      memorySize: parseFloat(matches[3]),
+      maxMemoryUsed: parseFloat(matches[4]),
     };
   }
 
@@ -248,9 +248,9 @@ export class DeepBenchmarkingMainController {
     };
 
     let provisionedMemorySize = lambdaLogInfo.memorySize;
-    let billedDuration = parseFloat(lambdaLogInfo.billedDuration);
+    let billedDuration = lambdaLogInfo.billedDuration;
 
-    return pricingMap[provisionedMemorySize] * parseFloat(billedDuration);
+    return pricingMap[provisionedMemorySize] * billedDuration / 100;
   }
 
   /**
