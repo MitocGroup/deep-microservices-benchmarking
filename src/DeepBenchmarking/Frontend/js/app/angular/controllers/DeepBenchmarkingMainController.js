@@ -147,7 +147,7 @@ export class DeepBenchmarkingMainController {
 
         let request = resourceAction.request(payload).disableCache();
         if (requestGateway === _this.GATEWAY_LAMBDA) {
-          request.useDirectCall();
+          request.useDirectCall(true);
         }
 
         request.send((response) => {
@@ -156,6 +156,12 @@ export class DeepBenchmarkingMainController {
           requestInfo.stop = new Date().getTime();
           requestInfo.duration = requestInfo.stop - requestInfo.start;
           requestInfo.internalDebug = !response.isError && response.data.hasOwnProperty('debug') ? response.data.debug : {};
+
+          if (response.logResult) {
+            let logInfo = _this._parseLogResult(response.logResult);
+
+            Object.assign(requestInfo.internalDebug, logInfo);
+          }
 
           requestsStack.push(requestInfo);
 
@@ -174,6 +180,37 @@ export class DeepBenchmarkingMainController {
     };
 
     execRequest();
+  }
+
+  /**
+   * @param {String} logResult
+   * @sample:
+   * START RequestId: 89b188ef-eba6-11e5-ac37-73c94fe513a1 Version: $LATEST
+   * END RequestId: 89b188ef-eba6-11e5-ac37-73c94fe513a1
+   * REPORT RequestId: 89b188ef-eba6-11e5-ac37-73c94fe513a1    Duration: 0.52 ms    Billed Duration: 100 ms     Memory Size: 128 MB    Max Memory Used: 41 MB
+   * @returns {*}
+   * @private
+   */
+  _parseLogResult(logResult) {
+    let regexp = new RegExp(
+      'duration:\\s+([\\d\\.]+\\s+\\w+)\\s+' +
+      'billed\\s+duration:\\s+(\\d+\\s+\\w+)\\s+' +
+      'memory\\s+size:\\s+\\d+\\s+\\w+\\s+' +
+      'max\\s+memory\\s+used:\\s+(\\d+\\s+\\w+)',
+      'i'
+    );
+
+    let matches = logResult.match(regexp);
+
+    if (!matches) {
+      return {};
+    }
+
+    return {
+      lambdaExecutionTime: matches[1],
+      billedDuration: matches[2],
+      maxMemoryUsed: matches[3],
+    };
   }
 
   /**
