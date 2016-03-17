@@ -159,8 +159,9 @@ export class DeepBenchmarkingMainController {
 
           if (response.logResult) {
             let logInfo = _this._parseLogResult(response.logResult);
+            requestInfo.cost = _this._computeLambdaCost(logInfo);
 
-            Object.assign(requestInfo.internalDebug, logInfo);
+            Object.assign(requestInfo, logInfo);
           }
 
           requestsStack.push(requestInfo);
@@ -193,10 +194,10 @@ export class DeepBenchmarkingMainController {
    */
   _parseLogResult(logResult) {
     let regexp = new RegExp(
-      'duration:\\s+([\\d\\.]+\\s+\\w+)\\s+' +
-      'billed\\s+duration:\\s+(\\d+\\s+\\w+)\\s+' +
-      'memory\\s+size:\\s+\\d+\\s+\\w+\\s+' +
-      'max\\s+memory\\s+used:\\s+(\\d+\\s+\\w+)',
+      'duration:\\s+([\\d\\.]+)\\s+\\w+\\s+' +
+      'billed\\s+duration:\\s+(\\d+)\\s+\\w+\\s+' +
+      'memory\\s+size:\\s+(\\d+)\\s+\\w+\\s+' +
+      'max\\s+memory\\s+used:\\s+(\\d+)\\s+\\w+',
       'i'
     );
 
@@ -207,10 +208,49 @@ export class DeepBenchmarkingMainController {
     }
 
     return {
-      lambdaExecutionTime: matches[1],
+      lambdaExecutionDuration: matches[1],
       billedDuration: matches[2],
-      maxMemoryUsed: matches[3],
+      memorySize: matches[3],
+      maxMemoryUsed: matches[4],
     };
+  }
+
+  /**
+   * @param {*} lambdaLogInfo
+   * @returns {Number}
+   * @private
+   */
+  _computeLambdaCost(lambdaLogInfo) {
+    let pricingMap = {
+      "128": 0.000000208,
+      "192": 0.000000313,
+      "256": 0.000000417,
+      "320": 0.000000521,
+      "384": 0.000000625,
+      "448": 0.000000729,
+      "512": 0.000000834,
+      "576": 0.000000938,
+      "640": 0.000001042,
+      "704": 0.000001146,
+      "768": 0.000001250,
+      "832": 0.000001354,
+      "896": 0.000001459,
+      "960": 0.000001563,
+      "1024": 0.000001667,
+      "1088": 0.000001771,
+      "1152": 0.000001875,
+      "1216": 0.000001980,
+      "1280": 0.000002084,
+      "1344": 0.000002188,
+      "1408": 0.000002292,
+      "1472": 0.000002396,
+      "1536": 0.000002501,
+    };
+
+    let provisionedMemorySize = lambdaLogInfo.memorySize;
+    let billedDuration = parseFloat(lambdaLogInfo.billedDuration);
+
+    return pricingMap[provisionedMemorySize] * parseFloat(billedDuration);
   }
 
   /**
