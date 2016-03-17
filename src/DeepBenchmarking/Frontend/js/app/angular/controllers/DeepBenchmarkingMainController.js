@@ -16,7 +16,7 @@ export class DeepBenchmarkingMainController {
     this.config = {
       loops: 2,
       interval: 500,
-      gateway: this.GATEWAY_API,
+      gateway: this.GATEWAY_LAMBDA,
     };
 
     this.resultsStack = {};
@@ -25,6 +25,7 @@ export class DeepBenchmarkingMainController {
     this.loadingText = '';
     this.resources = this._resources();
     this.workingResource = null;
+    this.showLogInfo = true;
     this.busy = [];
   }
 
@@ -73,6 +74,7 @@ export class DeepBenchmarkingMainController {
     this.busy[resourceId] = true;
 
     this._invokeResource(resourceId, payload, this.config, (resourceRequests) => {
+      this.showLogInfo = this.config.gateway === this.GATEWAY_LAMBDA;
       this.resultsStack[resourceId] = resourceRequests;
       this.busy[resourceId] = false;
       this.loadingText = `Result for "${resourceId}"`;

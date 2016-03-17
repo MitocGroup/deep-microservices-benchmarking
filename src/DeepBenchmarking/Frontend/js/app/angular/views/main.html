@@ -63,11 +63,11 @@
                 <th>Start time</th>
                 <th>Stop time</th>
                 <th>Duration (ms)</th>
-                <th>Lambda Execution Duration (ms)</th>
-                <th>Billed Duration (ms)</th>
-                <th>Memory Size (MB)</th>
-                <th>Max Memory Used (MB)</th>
-                <th>Cost ($)</th>
+                <th ng-show="main.showLogInfo">Execution Duration (ms)</th>
+                <th ng-show="main.showLogInfo">Billed Duration (ms)</th>
+                <th ng-show="main.showLogInfo">Memory Size (MB)</th>
+                <th ng-show="main.showLogInfo">Max Memory Used (MB)</th>
+                <th ng-show="main.showLogInfo">Cost ($)</th>
                 <!--<th>Details</th>-->
             </tr>
             </thead>
@@ -77,11 +77,11 @@
                 <td data-th="Start time">{{request.start| date:'HH:mm:ss.sss'}}</td>
                 <td data-th="Stop time">{{request.stop| date:'HH:mm:ss.sss'}}</td>
                 <td data-th="Duration (ms)">{{request.duration}}</td>
-                <td data-th="Execution Duration (ms)">{{request.executionDuration}}</td>
-                <td data-th="Billed Duration (ms)">{{request.billedDuration}}</td>
-                <td data-th="Memory Size (MB)">{{request.memorySize}}</td>
-                <td data-th="Max Memory Used (MB)">{{request.maxMemoryUsed}}</td>
-                <td data-th="Cost ($)">{{request.cost}}</td>
+                <td ng-show="main.showLogInfo" data-th="Execution Duration (ms)">{{request.executionDuration}}</td>
+                <td ng-show="main.showLogInfo" data-th="Billed Duration (ms)">{{request.billedDuration}}</td>
+                <td ng-show="main.showLogInfo" data-th="Memory Size (MB)">{{request.memorySize}}</td>
+                <td ng-show="main.showLogInfo" data-th="Max Memory Used (MB)">{{request.maxMemoryUsed}}</td>
+                <td ng-show="main.showLogInfo" data-th="Cost ($)">{{request.cost|number:9}}</td>
                 <!--<td data-th="Details">-->
                     <!--<p ng-repeat="(actionName, durationMs) in request.internalDebug">-->
                         <!--{{ actionName }} : {{ durationMs }}-->
