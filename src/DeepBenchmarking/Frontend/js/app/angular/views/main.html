@@ -81,8 +81,8 @@
                 <td data-th="Max Memory Used (MB)" ng-show="main.showLogInfo">{{request.maxMemoryUsed}}</td>
                 <td data-th="Start time">{{request.start| date:'HH:mm:ss.sss'}}</td>
                 <td data-th="Stop time">{{request.stop| date:'HH:mm:ss.sss'}}</td>
-                <td data-th="Backend-call Duration (ms)">{{request.duration}}</td>
-                <td data-th="Execution Duration (ms)" ng-show="main.showLogInfo">{{request.executionDuration}}</td>
+                <td data-th="Front-end Call Duration (ms)">{{request.duration}}</td>
+                <td data-th="Backend-call Duration (ms)" ng-show="main.showLogInfo">{{request.executionDuration}}</td>
                 <td data-th="Billed Duration (ms)" ng-show="main.showLogInfo">{{request.billedDuration}}</td>
                 <td data-th="Billed Charge ($)" ng-show="main.showLogInfo">{{request.cost|number:9}}</td>
                 <!--<td data-th="Details">-->
