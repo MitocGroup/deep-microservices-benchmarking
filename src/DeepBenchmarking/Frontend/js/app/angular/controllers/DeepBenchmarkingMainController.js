@@ -291,7 +291,11 @@ export class DeepBenchmarkingMainController {
    * @private
    */
   get _lambdaSizePromise() {
-    return new Promise((resolve, reject) => {
+    if (this._lambdaSizePromiseInstance !== undefined) {
+      return this._lambdaSizePromiseInstance;
+    }
+
+    this._lambdaSizePromiseInstance = new Promise((resolve, reject) => {
       let retrieveSizeAction = this._deepResource.get('@deep.benchmarking:retrieve:lambda-size');
       let payload = {
         FunctionList: this._functionNameList
@@ -307,6 +311,8 @@ export class DeepBenchmarkingMainController {
         resolve(response.data.sizeMap);
       });
     });
+
+    return this._lambdaSizePromiseInstance;
   }
 
   /**
