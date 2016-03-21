@@ -144,7 +144,7 @@ export class DeepBenchmarkingMainController {
 
     function execRequest(lambdaSize, index = 0) {
       let requestInfo = {
-          index: index,
+          index: index + 1,
           start: new Date().getTime(),
         };
 
