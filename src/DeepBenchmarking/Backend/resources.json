@@ -48,5 +48,15 @@
       ],
       "source": "src/CaseWithoutFramework"
     }
+  },
+  "retrieve": {
+    "lambda-size": {
+      "description": "testing lambda performance",
+      "type": "lambda",
+      "methods": [
+        "GET"
+      ],
+      "source": "src/RetrieveLambdaSize"
+    }
   }
 }
