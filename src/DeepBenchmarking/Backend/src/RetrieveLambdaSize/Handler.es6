@@ -4,6 +4,9 @@ import DeepFramework from 'deep-framework';
 import AWS from 'aws-sdk';
 
 export default class extends DeepFramework.Core.AWS.Lambda.Runtime {
+  /**
+   * @param {*} args
+   */
   constructor(...args) {
     super(...args);
 
@@ -60,7 +63,7 @@ export default class extends DeepFramework.Core.AWS.Lambda.Runtime {
   }
 
   /**
-   * @returns {number}
+   * @returns {Number}
    */
   get REQUEST_INTERVAL() {
     return 200;
