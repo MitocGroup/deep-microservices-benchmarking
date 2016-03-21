@@ -115,7 +115,7 @@ export class DeepBenchmarkingMainController {
           let action = resourceActions[actionId];
           let actionIdentifier = `${msId}:${resourceId}:${actionId}`;
 
-          if (action.type === 'lambda' && actionIdentifier !== 'deep.benchmarking:retrieve:lambda-size') {
+          if (action.type === 'lambda' && actionIdentifier !== 'deep.benchmarking:lambda-size:retrieve') {
             resourcesStack[msId].push(actionIdentifier);
           }
         }
@@ -189,6 +189,8 @@ export class DeepBenchmarkingMainController {
       let lambdaSize = sizeMap[resourceOriginal] / 1024 / 1024; // bytes -> MB
 
       execRequest(lambdaSize);
+    }).catch((error) => {
+      DeepFramework.Kernel.get('log').log(error);
     });
   }
 
@@ -296,7 +298,7 @@ export class DeepBenchmarkingMainController {
     }
 
     this._lambdaSizePromiseInstance = new Promise((resolve, reject) => {
-      let retrieveSizeAction = this._deepResource.get('@deep.benchmarking:retrieve:lambda-size');
+      let retrieveSizeAction = this._deepResource.get('@deep.benchmarking:lambda-size:retrieve');
       let payload = {
         FunctionList: this._functionNameList
       };

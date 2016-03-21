@@ -66,6 +66,6 @@ export default class extends DeepFramework.Core.AWS.Lambda.Runtime {
    * @returns {Number}
    */
   get REQUEST_INTERVAL() {
-    return 200;
+    return 50;
   }
 }
