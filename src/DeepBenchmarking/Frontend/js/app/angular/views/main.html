@@ -35,7 +35,7 @@
                     <p class="resource-id float-left">{{ resourceId }}</p>
                     <small class="float-left" ng-if="resultSummary !== null">
                         (min:{{ resultSummary.min }}, max:{{ resultSummary.max }}, avg:{{ resultSummary.avg }}, total(s): {{ resultSummary.total }}
-                        <span ng-if="resultSummary.cost > 0">, Billed Charge ($): {{ resultSummary.cost|number:9 }}</span>)
+                        <span ng-if="resultSummary.cost > 0">, billed charge ($): {{ resultSummary.cost|number:9 }}</span>)
                     </small>
                 </div>
                 <div class="float-right resources-actions">
