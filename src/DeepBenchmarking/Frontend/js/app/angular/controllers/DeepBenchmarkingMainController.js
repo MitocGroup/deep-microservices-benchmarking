@@ -142,7 +142,7 @@ export class DeepBenchmarkingMainController {
     let receivedResponses = 0;
     let _this = this;
 
-    function execRequest(lambdaSize, index = 0) {
+    function execRequest(index, onCompleteCallback) {
       let requestInfo = {
           index: index + 1,
           start: new Date().getTime(),
@@ -159,7 +159,6 @@ export class DeepBenchmarkingMainController {
           requestInfo.stop = new Date().getTime();
           requestInfo.duration = requestInfo.stop - requestInfo.start;
           requestInfo.internalDebug = !response.isError && response.data.hasOwnProperty('debug') ? response.data.debug : {};
-          requestInfo.lambdaSize = lambdaSize;
 
           if (response.logResult) {
             let logInfo = _this._parseLogResult(response.logResult);
@@ -171,7 +170,7 @@ export class DeepBenchmarkingMainController {
           requestsStack.push(requestInfo);
 
           if (receivedResponses == loops) {
-            callback(requestsStack);
+            onCompleteCallback(requestsStack);
           }
         });
 
@@ -179,7 +178,7 @@ export class DeepBenchmarkingMainController {
 
         if (index < loops) {
           setTimeout(function() {
-            execRequest(lambdaSize, index);
+            execRequest(index, onCompleteCallback);
           }, intervalMs);
         }
     }
@@ -188,7 +187,11 @@ export class DeepBenchmarkingMainController {
       let resourceOriginal = resourceAction.source.original;
       let lambdaSize = sizeMap[resourceOriginal] / 1024 / 1024; // bytes -> MB
 
-      execRequest(lambdaSize);
+      execRequest(0, (requestsStack) => {
+        requestsStack.forEach(request => (request.lambdaSize = lambdaSize));
+
+        callback(requestsStack);
+      });
     }).catch((error) => {
       DeepFramework.Kernel.get('log').log(error);
     });
