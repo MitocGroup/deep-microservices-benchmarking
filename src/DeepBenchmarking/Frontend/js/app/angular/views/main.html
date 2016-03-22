@@ -34,7 +34,8 @@
                 <div class="float-left resource-id-results">
                     <p class="resource-id float-left">{{ resourceId }}</p>
                     <small class="float-left" ng-if="resultSummary !== null">
-                        (min:{{ resultSummary.min }}, max:{{ resultSummary.max }}, avg:{{ resultSummary.avg }}, total(s): {{ resultSummary.total }})
+                        (min:{{ resultSummary.min }}, max:{{ resultSummary.max }}, avg:{{ resultSummary.avg }}, total(s): {{ resultSummary.total }}
+                        <span ng-if="resultSummary.cost > 0">, billed charge ($): {{ resultSummary.cost|number:9 }}</span>)
                     </small>
                 </div>
                 <div class="float-right resources-actions">
@@ -59,29 +60,31 @@
         <table class="rwd-table table table-bordered">
             <thead>
             <tr>
-                <th>Request #</th>
-                <th>Start time</th>
-                <th>Stop time</th>
-                <th>Duration (ms)</th>
-                <th ng-show="main.showLogInfo">Execution Duration (ms)</th>
-                <th ng-show="main.showLogInfo">Billed Duration (ms)</th>
+                <th>#</th>
+                <th>Function Size (MB)</th>
                 <th ng-show="main.showLogInfo">Memory Size (MB)</th>
                 <th ng-show="main.showLogInfo">Max Memory Used (MB)</th>
-                <th ng-show="main.showLogInfo">Cost ($)</th>
+                <th>Start time</th>
+                <th>Stop time</th>
+                <th>Front-end Call (ms)</th>
+                <th ng-show="main.showLogInfo">Back-end Call (ms)</th>
+                <th ng-show="main.showLogInfo">Total Billed (ms)</th>
+                <th ng-show="main.showLogInfo">Total Billed ($)</th>
                 <!--<th>Details</th>-->
             </tr>
             </thead>
             <tbody>
             <tr ng-repeat="request in main.resultsStack[main.workingResource]">
-                <td data-th="Request #">{{request.index}}</td>
+                <td data-th="#">{{request.index}}</td>
+                <td data-th="Size">{{request.lambdaSize|number:2}}</td>
+                <td data-th="Memory Size (MB)" ng-show="main.showLogInfo">{{request.memorySize}}</td>
+                <td data-th="Max Memory Used (MB)" ng-show="main.showLogInfo">{{request.maxMemoryUsed}}</td>
                 <td data-th="Start time">{{request.start| date:'HH:mm:ss.sss'}}</td>
                 <td data-th="Stop time">{{request.stop| date:'HH:mm:ss.sss'}}</td>
-                <td data-th="Duration (ms)">{{request.duration}}</td>
-                <td ng-show="main.showLogInfo" data-th="Execution Duration (ms)">{{request.executionDuration}}</td>
-                <td ng-show="main.showLogInfo" data-th="Billed Duration (ms)">{{request.billedDuration}}</td>
-                <td ng-show="main.showLogInfo" data-th="Memory Size (MB)">{{request.memorySize}}</td>
-                <td ng-show="main.showLogInfo" data-th="Max Memory Used (MB)">{{request.maxMemoryUsed}}</td>
-                <td ng-show="main.showLogInfo" data-th="Cost ($)">{{request.cost|number:9}}</td>
+                <td data-th="Front-end Call Duration (ms)">{{request.duration}}</td>
+                <td data-th="Backend-call Duration (ms)" ng-show="main.showLogInfo">{{request.executionDuration}}</td>
+                <td data-th="Billed Duration (ms)" ng-show="main.showLogInfo">{{request.billedDuration}}</td>
+                <td data-th="Billed Charge ($)" ng-show="main.showLogInfo">{{request.cost|number:9}}</td>
                 <!--<td data-th="Details">-->
                     <!--<p ng-repeat="(actionName, durationMs) in request.internalDebug">-->
                         <!--{{ actionName }} : {{ durationMs }}-->

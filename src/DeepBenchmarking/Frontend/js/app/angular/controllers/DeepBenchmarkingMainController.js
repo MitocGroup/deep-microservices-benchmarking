@@ -113,9 +113,10 @@ export class DeepBenchmarkingMainController {
           }
 
           let action = resourceActions[actionId];
+          let actionIdentifier = `${msId}:${resourceId}:${actionId}`;
 
-          if (action.type === 'lambda') {
-            resourcesStack[msId].push(`${msId}:${resourceId}:${actionId}`);
+          if (action.type === 'lambda' && actionIdentifier !== 'deep.benchmarking:lambda-size:retrieve') {
+            resourcesStack[msId].push(actionIdentifier);
           }
         }
       }
@@ -141,9 +142,9 @@ export class DeepBenchmarkingMainController {
     let receivedResponses = 0;
     let _this = this;
 
-    function execRequest(index = 0) {
-        let requestInfo = {
-          index: index,
+    function execRequest(index, onCompleteCallback) {
+      let requestInfo = {
+          index: index + 1,
           start: new Date().getTime(),
         };
 
@@ -169,7 +170,7 @@ export class DeepBenchmarkingMainController {
           requestsStack.push(requestInfo);
 
           if (receivedResponses == loops) {
-            callback(requestsStack);
+            onCompleteCallback(requestsStack);
           }
         });
 
@@ -177,12 +178,23 @@ export class DeepBenchmarkingMainController {
 
         if (index < loops) {
           setTimeout(function() {
-            execRequest(index);
+            execRequest(index, onCompleteCallback);
           }, intervalMs);
         }
-    };
+    }
 
-    execRequest();
+    this._lambdaSizePromise.then((sizeMap) => {
+      let resourceOriginal = resourceAction.source.original;
+      let lambdaSize = sizeMap[resourceOriginal] / 1024 / 1024; // bytes -> MB
+
+      execRequest(0, (requestsStack) => {
+        requestsStack.forEach(request => (request.lambdaSize = lambdaSize));
+
+        callback(requestsStack);
+      });
+    }).catch((error) => {
+      DeepFramework.Kernel.get('log').log(error);
+    });
   }
 
   /**
@@ -256,6 +268,59 @@ export class DeepBenchmarkingMainController {
   }
 
   /**
+   * @returns {Object[]}
+   * @private
+   */
+  get _functionNameList() {
+    let functionNameList = [];
+
+    for (let msIdentifier in this.resources) {
+      if (!this.resources.hasOwnProperty(msIdentifier)) {
+        continue;
+      }
+
+      let resourceActions = this.resources[msIdentifier];
+
+      for (let resourceIdentifier of resourceActions) {
+        let actionInstance = this._deepResource.get(`@${resourceIdentifier}`);
+
+        functionNameList.push(actionInstance.source.original);
+      }
+    }
+
+    return functionNameList;
+  }
+
+  /**
+   * @returns {Promise}
+   * @private
+   */
+  get _lambdaSizePromise() {
+    if (this._lambdaSizePromiseInstance !== undefined) {
+      return this._lambdaSizePromiseInstance;
+    }
+
+    this._lambdaSizePromiseInstance = new Promise((resolve, reject) => {
+      let retrieveSizeAction = this._deepResource.get('@deep.benchmarking:lambda-size:retrieve');
+      let payload = {
+        FunctionList: this._functionNameList
+      };
+
+      retrieveSizeAction.request(payload).cache(3600).send((response) => {
+        if (response.isError) {
+          reject(new Error('Unable to fetch lambda size information'));
+
+          return;
+        }
+
+        resolve(response.data.sizeMap);
+      });
+    });
+
+    return this._lambdaSizePromiseInstance;
+  }
+
+  /**
    * @param resourceId
    * @returns {{min: number, max: number, avg: number}}
    * @private
@@ -265,6 +330,7 @@ export class DeepBenchmarkingMainController {
     let durationArr = [];
     let startArr = [];
     let stopArr = [];
+    let costArr = [];
 
     for (let resultKey in results) {
       if (!results.hasOwnProperty(resultKey)) {
@@ -276,6 +342,10 @@ export class DeepBenchmarkingMainController {
       durationArr.push(result.duration);
       startArr.push(result.start);
       stopArr.push(result.stop);
+
+      if (result.cost) {
+        costArr.push(result.cost);
+      }
     }
 
     let result = null;
@@ -290,6 +360,7 @@ export class DeepBenchmarkingMainController {
         minStart: minStart,
         maxStop: maxStop,
         total: (maxStop - minStart) / 1000,
+        cost: costArr.reduce((a, b) => a + b, 0),
       };
     }
 
