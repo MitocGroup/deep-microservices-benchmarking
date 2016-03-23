@@ -306,7 +306,7 @@ export class DeepBenchmarkingMainController {
         FunctionList: this._functionNameList
       };
 
-      retrieveSizeAction.request(payload).cache(3600).send((response) => {
+      retrieveSizeAction.request(payload, 'POST').send((response) => {
         if (response.isError) {
           reject(new Error('Unable to fetch lambda size information'));
 
