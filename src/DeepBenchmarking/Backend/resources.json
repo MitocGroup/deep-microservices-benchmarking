@@ -48,5 +48,15 @@
       ],
       "source": "src/CaseWithoutFramework"
     }
+  },
+  "lambda-size": {
+    "retrieve": {
+      "description": "retrieve lambda code size (in bytes)",
+      "type": "lambda",
+      "methods": [
+        "POST"
+      ],
+      "source": "src/LambdaSizeRetrieve"
+    }
   }
 }

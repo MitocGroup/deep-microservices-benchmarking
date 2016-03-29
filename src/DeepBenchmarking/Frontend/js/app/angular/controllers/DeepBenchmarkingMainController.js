@@ -16,7 +16,7 @@ export class DeepBenchmarkingMainController {
     this.config = {
       loops: 2,
       interval: 500,
-      gateway: this.GATEWAY_API,
+      gateway: this.GATEWAY_LAMBDA,
     };
 
     this.resultsStack = {};
@@ -25,6 +25,7 @@ export class DeepBenchmarkingMainController {
     this.loadingText = '';
     this.resources = this._resources();
     this.workingResource = null;
+    this.showLogInfo = true;
     this.busy = [];
   }
 
@@ -73,6 +74,7 @@ export class DeepBenchmarkingMainController {
     this.busy[resourceId] = true;
 
     this._invokeResource(resourceId, payload, this.config, (resourceRequests) => {
+      this.showLogInfo = this.config.gateway === this.GATEWAY_LAMBDA;
       this.resultsStack[resourceId] = resourceRequests;
       this.busy[resourceId] = false;
       this.loadingText = `Result for "${resourceId}"`;
@@ -111,9 +113,10 @@ export class DeepBenchmarkingMainController {
           }
 
           let action = resourceActions[actionId];
+          let actionIdentifier = `${msId}:${resourceId}:${actionId}`;
 
-          if (action.type === 'lambda') {
-            resourcesStack[msId].push(`${msId}:${resourceId}:${actionId}`);
+          if (action.type === 'lambda' && actionIdentifier !== 'deep.benchmarking:lambda-size:retrieve') {
+            resourcesStack[msId].push(actionIdentifier);
           }
         }
       }
@@ -139,15 +142,15 @@ export class DeepBenchmarkingMainController {
     let receivedResponses = 0;
     let _this = this;
 
-    function execRequest(index = 0) {
-        let requestInfo = {
-          index: index,
+    function execRequest(index, onCompleteCallback) {
+      let requestInfo = {
+          index: index + 1,
           start: new Date().getTime(),
         };
 
         let request = resourceAction.request(payload).disableCache();
         if (requestGateway === _this.GATEWAY_LAMBDA) {
-          request.useDirectCall();
+          request.useDirectCall(true);
         }
 
         request.send((response) => {
@@ -157,10 +160,17 @@ export class DeepBenchmarkingMainController {
           requestInfo.duration = requestInfo.stop - requestInfo.start;
           requestInfo.internalDebug = !response.isError && response.data.hasOwnProperty('debug') ? response.data.debug : {};
 
+          if (response.logResult) {
+            let logInfo = _this._parseLogResult(response.logResult);
+            requestInfo.cost = _this._computeLambdaCost(logInfo);
+
+            Object.assign(requestInfo, logInfo);
+          }
+
           requestsStack.push(requestInfo);
 
           if (receivedResponses == loops) {
-            callback(requestsStack);
+            onCompleteCallback(requestsStack);
           }
         });
 
@@ -168,12 +178,146 @@ export class DeepBenchmarkingMainController {
 
         if (index < loops) {
           setTimeout(function() {
-            execRequest(index);
+            execRequest(index, onCompleteCallback);
           }, intervalMs);
         }
+    }
+
+    this._lambdaSizePromise.then((sizeMap) => {
+      let resourceOriginal = resourceAction.source.original;
+      let lambdaSize = sizeMap[resourceOriginal] / 1024 / 1024; // bytes -> MB
+
+      execRequest(0, (requestsStack) => {
+        requestsStack.forEach(request => (request.lambdaSize = lambdaSize));
+
+        callback(requestsStack);
+      });
+    }).catch((error) => {
+      DeepFramework.Kernel.get('log').log(error);
+    });
+  }
+
+  /**
+   * @param {String} logResult
+   * @sample:
+   * START RequestId: 89b188ef-eba6-11e5-ac37-73c94fe513a1 Version: $LATEST
+   * END RequestId: 89b188ef-eba6-11e5-ac37-73c94fe513a1
+   * REPORT RequestId: 89b188ef-eba6-11e5-ac37-73c94fe513a1    Duration: 0.52 ms    Billed Duration: 100 ms     Memory Size: 128 MB    Max Memory Used: 41 MB
+   * @returns {*}
+   * @private
+   */
+  _parseLogResult(logResult) {
+    let regexp = new RegExp(
+      'duration:\\s+([\\d\\.]+)\\s+\\w+\\s+' +
+      'billed\\s+duration:\\s+(\\d+)\\s+\\w+\\s+' +
+      'memory\\s+size:\\s+(\\d+)\\s+\\w+\\s+' +
+      'max\\s+memory\\s+used:\\s+(\\d+)\\s+\\w+',
+      'i'
+    );
+
+    let matches = logResult.match(regexp);
+
+    if (!matches) {
+      return {};
+    }
+
+    return {
+      executionDuration: parseFloat(matches[1]),
+      billedDuration: parseFloat(matches[2]),
+      memorySize: parseFloat(matches[3]),
+      maxMemoryUsed: parseFloat(matches[4]),
+    };
+  }
+
+  /**
+   * @param {*} lambdaLogInfo
+   * @returns {Number}
+   * @private
+   */
+  _computeLambdaCost(lambdaLogInfo) {
+    let pricingMap = {
+      "128": 0.000000208,
+      "192": 0.000000313,
+      "256": 0.000000417,
+      "320": 0.000000521,
+      "384": 0.000000625,
+      "448": 0.000000729,
+      "512": 0.000000834,
+      "576": 0.000000938,
+      "640": 0.000001042,
+      "704": 0.000001146,
+      "768": 0.000001250,
+      "832": 0.000001354,
+      "896": 0.000001459,
+      "960": 0.000001563,
+      "1024": 0.000001667,
+      "1088": 0.000001771,
+      "1152": 0.000001875,
+      "1216": 0.000001980,
+      "1280": 0.000002084,
+      "1344": 0.000002188,
+      "1408": 0.000002292,
+      "1472": 0.000002396,
+      "1536": 0.000002501,
     };
 
-    execRequest();
+    let provisionedMemorySize = lambdaLogInfo.memorySize;
+    let billedDuration = lambdaLogInfo.billedDuration;
+
+    return pricingMap[provisionedMemorySize] * billedDuration / 100;
+  }
+
+  /**
+   * @returns {Object[]}
+   * @private
+   */
+  get _functionNameList() {
+    let functionNameList = [];
+
+    for (let msIdentifier in this.resources) {
+      if (!this.resources.hasOwnProperty(msIdentifier)) {
+        continue;
+      }
+
+      let resourceActions = this.resources[msIdentifier];
+
+      for (let resourceIdentifier of resourceActions) {
+        let actionInstance = this._deepResource.get(`@${resourceIdentifier}`);
+
+        functionNameList.push(actionInstance.source.original);
+      }
+    }
+
+    return functionNameList;
+  }
+
+  /**
+   * @returns {Promise}
+   * @private
+   */
+  get _lambdaSizePromise() {
+    if (this._lambdaSizePromiseInstance !== undefined) {
+      return this._lambdaSizePromiseInstance;
+    }
+
+    this._lambdaSizePromiseInstance = new Promise((resolve, reject) => {
+      let retrieveSizeAction = this._deepResource.get('@deep.benchmarking:lambda-size:retrieve');
+      let payload = {
+        FunctionList: this._functionNameList
+      };
+
+      retrieveSizeAction.request(payload, 'POST').send((response) => {
+        if (response.isError) {
+          reject(new Error('Unable to fetch lambda size information'));
+
+          return;
+        }
+
+        resolve(response.data.sizeMap);
+      });
+    });
+
+    return this._lambdaSizePromiseInstance;
   }
 
   /**
@@ -186,6 +330,7 @@ export class DeepBenchmarkingMainController {
     let durationArr = [];
     let startArr = [];
     let stopArr = [];
+    let costArr = [];
 
     for (let resultKey in results) {
       if (!results.hasOwnProperty(resultKey)) {
@@ -197,6 +342,10 @@ export class DeepBenchmarkingMainController {
       durationArr.push(result.duration);
       startArr.push(result.start);
       stopArr.push(result.stop);
+
+      if (result.cost) {
+        costArr.push(result.cost);
+      }
     }
 
     let result = null;
@@ -211,6 +360,7 @@ export class DeepBenchmarkingMainController {
         minStart: minStart,
         maxStop: maxStop,
         total: (maxStop - minStart) / 1000,
+        cost: costArr.reduce((a, b) => a + b, 0),
       };
     }
 

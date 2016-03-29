@@ -8,7 +8,7 @@ export default {
     let debug = {};
     let startKernelLoad = new Date().getTime();
 
-    DeepFramework.KernelFromLambdaContext(context).loadFromFile("_config.json", (deepKernel) => {
+    DeepFramework.KernelFromLambdaContext(context).bootstrap((deepKernel) => {
         let stopKernelLoad = new Date().getTime();
         debug.kernelLoad = stopKernelLoad - startKernelLoad;
 
