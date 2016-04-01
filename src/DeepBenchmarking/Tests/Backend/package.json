@@ -1,5 +1,5 @@
 {
-  "name": "DeepDeepBenchmarkingBackend",
+  "name": "deep-benchmarking-backend",
   "version": "0.0.0",
   "description": "DEEP Micro Services Benchmarking Backend",
   "scripts": {
@@ -11,4 +11,3 @@
   "devDependencies": {},
   "private": true
 }
-
