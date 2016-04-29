@@ -1,7 +1,7 @@
 {
   "name": "deep-benchmarking-frontend",
-  "version": "0.0.0",
-  "description": "DEEP DeepBenchmarking Microservice",
+  "version": "0.0.1",
+  "description": "deep-benchmarking microservice",
   "scripts": {
     "postinstall": "jspm install",
     "test": "karma start config.karma.js",

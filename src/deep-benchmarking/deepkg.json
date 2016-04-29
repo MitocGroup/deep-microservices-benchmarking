@@ -1,6 +1,6 @@
 {
-  "identifier": "deep.benchmarking",
-  "name": "DeepBenchmarking",
+  "identifier": "deep-benchmarking",
+  "name": "deep-benchmarking",
   "description": "Benchmark lambdas performance",
   "version": "0.0.1",
   "author": {
