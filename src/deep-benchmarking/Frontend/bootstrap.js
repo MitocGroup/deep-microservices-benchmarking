@@ -5,8 +5,8 @@ export default function deepBenchmarking() {
   let deepAsset = DeepFramework.Kernel.get('asset');
 
   let scripts = [
-    Promise.resolve(System.import(deepAsset.locate('@deep.benchmarking:js/config.system.js'))),
-    Promise.resolve(System.import(deepAsset.locate('@deep.benchmarking:js/app/angular/index.js'))),
+    Promise.resolve(System.import(deepAsset.locate('@deep-benchmarking:js/config.system.js'))),
+    Promise.resolve(System.import(deepAsset.locate('@deep-benchmarking:js/app/angular/index.js'))),
   ];
 
   return Promise.all(scripts);

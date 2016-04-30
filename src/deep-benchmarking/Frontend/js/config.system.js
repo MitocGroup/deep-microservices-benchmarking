@@ -1,5 +1,5 @@
 System.config({
-  baseURL: "deep.benchmarking",
+  baseURL: "deep-benchmarking",
   defaultJSExtensions: true,
   transpiler: "traceur",
   paths: {

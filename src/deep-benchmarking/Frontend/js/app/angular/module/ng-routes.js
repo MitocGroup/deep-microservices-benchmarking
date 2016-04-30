@@ -8,7 +8,7 @@ export default {
     url: '/deep-benchmarking',
     controller: 'DeepBenchmarkingMainController',
     controllerAs: 'main',
-    templateUrl: deepAsset.locate('@deep.benchmarking:js/app/angular/views/main.html'),
+    templateUrl: deepAsset.locate('@deep-benchmarking:js/app/angular/views/main.html'),
     data: {
       pageTitle: 'Benchmarking',
     },
