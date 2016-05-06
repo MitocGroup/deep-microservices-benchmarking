@@ -1,0 +1,48 @@
+{
+  "case": {
+    "without-babel": {
+      "description": "testing lambda performance",
+      "type": "lambda",
+      "methods": ["GET"],
+      "source": "src/Case/WithoutBabel"
+    },
+    "with-babel": {
+      "description": "testing lambda performance",
+      "type": "lambda",
+      "methods": ["GET"],
+      "source": "src/Case/WithBabel"
+    },
+    "unused-code": {
+      "description": "testing lambda performance",
+      "type": "lambda",
+      "methods": ["GET"],
+      "source": "src/Case/UnusedCode"
+    },
+    "used-code": {
+      "description": "testing lambda performance",
+      "type": "lambda",
+      "methods": ["GET"],
+      "source": "src/Case/UsedCode"
+    },
+    "with-framework": {
+      "description": "testing lambda performance",
+      "type": "lambda",
+      "methods": ["GET"],
+      "source": "src/Case/WithFramework"
+    },
+    "without-framework": {
+      "description": "testing lambda performance",
+      "type": "lambda",
+      "methods": ["GET"],
+      "source": "src/Case/WithoutFramework"
+    }
+  },
+  "lambda-size": {
+    "retrieve": {
+      "description": "retrieve lambda code size (in bytes)",
+      "type": "lambda",
+      "methods": ["POST"],
+      "source": "src/Lambda/SizeRetrieve"
+    }
+  }
+}

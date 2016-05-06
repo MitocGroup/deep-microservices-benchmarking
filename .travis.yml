@@ -3,31 +3,33 @@ sudo: false
 node_js:
   - '4.3'
   - '4.4'
-  - '6.0'
-
 cache:
   directories:
     - $(npm root -g)
     - node_modules
     - deep_modules
-
+    - $(npm config get prefix)/bin/deepify
+    - $(npm config get prefix)/bin/jspm
+    - $(npm config get prefix)/bin/karma
+    - $(npm config get prefix)/bin/_mocha
+    - $(npm config get prefix)/bin/istanbul
+    - $(npm config get prefix)/bin/protractor
 branches:
   only:
     - master
     - dev
     - stage
     - test
-
 before_install:
   - cp bin/test/package.json .
-
 after_success:
   - npm run coverage
-
 env:
+  matrix:
+    - TEST_SUITE=backend
+    - TEST_SUITE=frontend
   global:
-  # JSPM_GITHUB_AUTH_TOKEN=[secured]
-  - secure: NAdPvpG4O8G0UL5Mc8CWmWLmpZxqquNu+k61GR4ozC7x+HL85vcc8mOu8fmNeO2SbPH+8yovi9sxvMZZBI2sC+K23u44OrcDG3oTjLGvg+uKYlXtwKCRly/jUOXAzEehJupptm4HFb56APDRYX63pNXaXOOSEccqHNa5/MspQflj3cggGyOJ1bj71PH/eQmPOJDOQZkDDNDnfZq19dHWCEeNnAKpXpk4R9DYBhej3cXpfae+puNnjUUr1DYk6st3OsHw/lcc9OKZPRBNOGCWA7gLHCNGmX1bUtfGAZhzrjhsW8woT33/NZqPr7ICLHzpsTuCmNXx0SUKo6Ogiw+Nf4JEG06sJv9iaQD+cK0hD2zeMgs4Oaa9XE1bWYL7VuxjpMzDzJMSvBhYupQ+0UexrEMg9ze2YbDO0B2E4bx1M/33ztaoqOzqy6GCMwj7JWNO3dgKQJvM+9c6VtU8TofBNqB+ROVSFJCFGrO7qOrFGwyo3bVHyzYe7gPOzH2fmfFRdVpEbr0nLwaSB1YvqTjbu+RG7LdgVk5UoiPM7kZOYTGsWIws+hrtSVo6UPZxdWUGirvGewpV8Q7BzduK4urQ6UjDiFqfz4Cx+c1I+fxUW7ZieHhsEsziKU7M9cTQQ5fmELH3HlJDyWd6ME/NQXNHae0K/IpdsFoT+FC25Iu+Cww=
-  # CODACY_PROJECT_TOKEN=[secured]
-  - secure: SxP109CtOeuBjYKz8WEP1wyXWAi7JGAsff20fYe4CjRRgn2tPZ4cvFaUdblMImp/eRdmH3p5JWkm9LbI/FQr/UyJVNA7MeqOylb8BV2zgT85/oee8xYMUbOL+0nq+MDXh8eBiulQCcyP2WpKzLN6hIUUiYs3bOQem5YD/w1G4h1AC3/AhtKlUP8GB4wHx0nbkqbls2IdRRWwB1BA5HPE2MBr7IADSfmuC3p/rWAWKXlTR/Evrbj2YwhbN6HJdrJR0Ijrpy5pA2VcHm2pNk4AC8kJef6aPaPQZ+k2SkGkma+zU3fDLsSbbhJL0v96VAaI8XGuBYivYXf86SY4hZds3xO6F0hRujamnEYtcwptXalEZP0/WAO3NQ9pxaIa4nGj/B1nR6EN7JTEaDznR2BiQceVyzNdt6FgfwVIYZUQZ5eDE/xglEbP8tRqt0Z1TiJiuSLGc+mOl3jLjhCP58WHxjzN71ksapLZpylhlnlpjEbMlO6sdZIaIKlc8s38azqXvQ+4J6LA59NRPnfAZbGUgAHW5dUzPg8YrRlDdv54umqEB/cFETTm6Z9r7Bn68D72SD8uOUQP5Cx0w9cIKZtkGs9J6xUv+/oh6oEkrgWLq0K80XL24AU051S806yjh/ADl7VeBGClj5p9JdC2WYGJ06N23wmNoVvEROzkJo1/5ls=
-
+    - secure: 
+        NAdPvpG4O8G0UL5Mc8CWmWLmpZxqquNu+k61GR4ozC7x+HL85vcc8mOu8fmNeO2SbPH+8yovi9sxvMZZBI2sC+K23u44OrcDG3oTjLGvg+uKYlXtwKCRly/jUOXAzEehJupptm4HFb56APDRYX63pNXaXOOSEccqHNa5/MspQflj3cggGyOJ1bj71PH/eQmPOJDOQZkDDNDnfZq19dHWCEeNnAKpXpk4R9DYBhej3cXpfae+puNnjUUr1DYk6st3OsHw/lcc9OKZPRBNOGCWA7gLHCNGmX1bUtfGAZhzrjhsW8woT33/NZqPr7ICLHzpsTuCmNXx0SUKo6Ogiw+Nf4JEG06sJv9iaQD+cK0hD2zeMgs4Oaa9XE1bWYL7VuxjpMzDzJMSvBhYupQ+0UexrEMg9ze2YbDO0B2E4bx1M/33ztaoqOzqy6GCMwj7JWNO3dgKQJvM+9c6VtU8TofBNqB+ROVSFJCFGrO7qOrFGwyo3bVHyzYe7gPOzH2fmfFRdVpEbr0nLwaSB1YvqTjbu+RG7LdgVk5UoiPM7kZOYTGsWIws+hrtSVo6UPZxdWUGirvGewpV8Q7BzduK4urQ6UjDiFqfz4Cx+c1I+fxUW7ZieHhsEsziKU7M9cTQQ5fmELH3HlJDyWd6ME/NQXNHae0K/IpdsFoT+FC25Iu+Cww=
+    - secure: 
+        SxP109CtOeuBjYKz8WEP1wyXWAi7JGAsff20fYe4CjRRgn2tPZ4cvFaUdblMImp/eRdmH3p5JWkm9LbI/FQr/UyJVNA7MeqOylb8BV2zgT85/oee8xYMUbOL+0nq+MDXh8eBiulQCcyP2WpKzLN6hIUUiYs3bOQem5YD/w1G4h1AC3/AhtKlUP8GB4wHx0nbkqbls2IdRRWwB1BA5HPE2MBr7IADSfmuC3p/rWAWKXlTR/Evrbj2YwhbN6HJdrJR0Ijrpy5pA2VcHm2pNk4AC8kJef6aPaPQZ+k2SkGkma+zU3fDLsSbbhJL0v96VAaI8XGuBYivYXf86SY4hZds3xO6F0hRujamnEYtcwptXalEZP0/WAO3NQ9pxaIa4nGj/B1nR6EN7JTEaDznR2BiQceVyzNdt6FgfwVIYZUQZ5eDE/xglEbP8tRqt0Z1TiJiuSLGc+mOl3jLjhCP58WHxjzN71ksapLZpylhlnlpjEbMlO6sdZIaIKlc8s38azqXvQ+4J6LA59NRPnfAZbGUgAHW5dUzPg8YrRlDdv54umqEB/cFETTm6Z9r7Bn68D72SD8uOUQP5Cx0w9cIKZtkGs9J6xUv+/oh6oEkrgWLq0K80XL24AU051S806yjh/ADl7VeBGClj5p9JdC2WYGJ06N23wmNoVvEROzkJo1/5ls=
