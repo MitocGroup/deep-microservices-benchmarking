@@ -107,6 +107,7 @@ npm-debug.log
 
 #####=== Proprietary ===#####
 lib.compiled
+**/compile
 /tests/*
 
 **/Frontend/vendor/
