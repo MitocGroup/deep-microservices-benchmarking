@@ -1,0 +1,11 @@
+{
+  "appIdentifier": "gfdgfd45745656867fgjgkhjkhje654e",
+  "appName": "My Custom Benchmarking App",
+  "env": "dev",
+  "awsAccountId": 123456789012,
+  "aws": {
+    "accessKeyId": "gfdgfd",
+    "secretAccessKey": "+gfdgfdgfdgfd/dEFpHV20ZxpQAkUqXwCSZBtZhCL",
+    "region": "us-west-2"
+  }
+}
