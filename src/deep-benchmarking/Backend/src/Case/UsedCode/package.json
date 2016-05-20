@@ -24,7 +24,7 @@
   ],
   "scripts": {
     "postinstall": "npm run compile",
-    "compile": "deepify compile-es6 `pwd`"
+    "compile": "deepify compile es6 `pwd`"
   },
   "dependencies": {
     "deep-framework": "^1.x.x",
@@ -39,8 +39,5 @@
     "aws-sdk": "*",
     "dynalite": "*"
   },
-  "devDependencies": {
-  },
-  "preferGlobal": false,
-  "analyze": true
+  "private": true
 }
