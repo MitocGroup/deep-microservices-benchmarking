@@ -24,13 +24,10 @@
   ],
   "scripts": {
     "postinstall": "npm run compile",
-    "compile": "deepify compile-es6 `pwd`"
+    "compile": "deepify compile es6 `pwd`"
   },
   "dependencies": {
     "aws-sdk": "^2.2.x"
   },
-  "devDependencies": {
-  },
-  "preferGlobal": false,
-  "analyze": true
+  "private": true
 }

@@ -108,6 +108,8 @@ npm-debug.log
 #####=== Proprietary ===#####
 lib.compiled
 **/compile
+_vars.sh
+GitDiffWalker.js
 /tests/*
 
 **/Frontend/vendor/
@@ -127,6 +129,6 @@ _config.json
 **/Backend/src/**/_config.json
 
 #Angular root MS
-src/DeepNgRoot
+**/src/deep-root-angular
 
 vendor

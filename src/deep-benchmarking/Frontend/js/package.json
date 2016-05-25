@@ -1,15 +1,19 @@
 {
+  "name": "deep-benchmarking-frontend",
+  "version": "0.0.1",
+  "description": "Benchmarking microservice",
   "jspm": {
     "directories": {
       "baseURL": "..",
       "lib": "",
-      "packages": "vendor",
-      "ss": ""
+      "packages": "vendor"
     },
     "configFile": "config.system.js",
     "devDependencies": {
       "traceur": "github:jmcriffey/bower-traceur@0.0.88",
       "traceur-runtime": "github:jmcriffey/bower-traceur-runtime@0.0.88"
     }
-  }
+  },
+  "dependencies": {},
+  "private": true
 }
