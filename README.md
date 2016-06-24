@@ -87,7 +87,7 @@ Interested in contributing to deep-microservices-benchmarking?
 Looking for web applications that use (or are similar to) deep-microservices-benchmarking?
 
 - Hello World: https://hello.deep.mg | https://github.com/MitocGroup/deep-microservices-helloworld
-- Todo App: https://todo.deep.mg | https://github.com/MitocGroup/deep-microservices-todo-app
+- Todo App: https://todo.deep.mg | https://github.com/MitocGroup/deep-microservices-todomvc
 - Enterprise Software Marketplace: https://www.deep.mg
 
 
