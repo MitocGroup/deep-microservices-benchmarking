@@ -1,5 +1,9 @@
 env:
   global:
+  # Disable interactive user mode ###
+  - DEEP_NO_INTERACTION=1
+  # Set type of E2E tests. Public, private or none
+  - E2E_TESTING=none
   # JSPM_GITHUB_AUTH_TOKEN=[secured]
   - secure: NAdPvpG4O8G0UL5Mc8CWmWLmpZxqquNu+k61GR4ozC7x+HL85vcc8mOu8fmNeO2SbPH+8yovi9sxvMZZBI2sC+K23u44OrcDG3oTjLGvg+uKYlXtwKCRly/jUOXAzEehJupptm4HFb56APDRYX63pNXaXOOSEccqHNa5/MspQflj3cggGyOJ1bj71PH/eQmPOJDOQZkDDNDnfZq19dHWCEeNnAKpXpk4R9DYBhej3cXpfae+puNnjUUr1DYk6st3OsHw/lcc9OKZPRBNOGCWA7gLHCNGmX1bUtfGAZhzrjhsW8woT33/NZqPr7ICLHzpsTuCmNXx0SUKo6Ogiw+Nf4JEG06sJv9iaQD+cK0hD2zeMgs4Oaa9XE1bWYL7VuxjpMzDzJMSvBhYupQ+0UexrEMg9ze2YbDO0B2E4bx1M/33ztaoqOzqy6GCMwj7JWNO3dgKQJvM+9c6VtU8TofBNqB+ROVSFJCFGrO7qOrFGwyo3bVHyzYe7gPOzH2fmfFRdVpEbr0nLwaSB1YvqTjbu+RG7LdgVk5UoiPM7kZOYTGsWIws+hrtSVo6UPZxdWUGirvGewpV8Q7BzduK4urQ6UjDiFqfz4Cx+c1I+fxUW7ZieHhsEsziKU7M9cTQQ5fmELH3HlJDyWd6ME/NQXNHae0K/IpdsFoT+FC25Iu+Cww=
   # CODACY_PROJECT_TOKEN=[secured]
