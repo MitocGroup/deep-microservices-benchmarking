@@ -36,8 +36,4 @@ suite('Handlers', () => {
     chai.expect(handler).to.be.an.instanceof(Handler);
   });
 
-  test('Check handle method exists', () => {
-    chai.expect(handler.handle).to.be.an('function');
-  });
-
 });
