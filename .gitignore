@@ -99,34 +99,46 @@ build/Release
 
 # Dependency directory
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git-
-node_modules
+**/node_modules
 
 # Debug log from npm
 npm-debug.log
 
 
-#####=== Proprietary ===#####
-lib.compiled
-**/compile
-/tests/*
+#####=== DEEP ===#####
+**/src/deep-root-*
 
-**/Frontend/vendor/
-.idea/
+# Compiled libraries
+**/compile/
+**/lib.compiled/
+
+# App specific files
 .parameters.json
-.DS_Store
-deeploy.json
-_config.json
-.cfg.*
+deeploy.json*
+*_config.json*
+*.provisioning.json*
 
-#Transpiled Lambdas code
-**/Backend/src/**/*.js
+# Backend files
+**/backend/src/**/*.js
+**/backend/src/**/*.zip
+**/backend/src/**/*.sfv
+**/backend/src/**/_config.json
 
-#Lambda archives and checksums
-**/Backend/src/**/*.zip
-**/Backend/src/**/*.sfv
-**/Backend/src/**/_config.json
+# Frontend dependencies
+**/js/vendor/
+**/frontend/vendor/
 
-#Angular root MS
-src/DeepNgRoot
+# Tests resources
+GitDiffWalker.js
+S3CoverageSynchronizer.js
+CoverageComparator.js
+CoverageManager.js
+GitHubMsgPublisher.js
+_vars.sh
+/package.json
+**/.sass-cache/
+**/coverage/
+**/coverages/
 
-vendor
+shared-lib
+!backend/shared-lib

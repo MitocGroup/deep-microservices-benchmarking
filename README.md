@@ -74,7 +74,7 @@ command checks every 30 seconds if it's disabled and when successful, removes it
 Having questions related to deep-microservices-benchmarking?
 
 - Ask questions: https://stackoverflow.com/questions/tagged/deep-framework
-- Chat with us: https://gitter.im/MitocGroup/deep-framework
+- Chat with us: https://mitocgroup.slack.com/messages/general
 - Send an email: feedback@deep.mg
 
 Interested in contributing to deep-microservices-benchmarking?
@@ -87,7 +87,7 @@ Interested in contributing to deep-microservices-benchmarking?
 Looking for web applications that use (or are similar to) deep-microservices-benchmarking?
 
 - Hello World: https://hello.deep.mg | https://github.com/MitocGroup/deep-microservices-helloworld
-- Todo App: https://todo.deep.mg | https://github.com/MitocGroup/deep-microservices-todo-app
+- Todo App: https://todo.deep.mg | https://github.com/MitocGroup/deep-microservices-todomvc
 - Enterprise Software Marketplace: https://www.deep.mg
 
 
