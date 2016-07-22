@@ -13,7 +13,7 @@ export default function deepBenchmarking() {
 }
 
 export function configLoad() {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     let deepSecurity = DeepFramework.Kernel.get('security');
 
     deepSecurity.anonymousLogin((token) => {

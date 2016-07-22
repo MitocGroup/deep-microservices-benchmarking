@@ -2,9 +2,12 @@
  * Created by AlexanderC on 9/18/15.
  */
 
+/*eslint complexity: ["error", 8]*/
+/*eslint no-eval: [0]*/
+
 'use strict';
 
-import moduleName from '../name';
+import moduleName from './../name';
 
 export class DeepBenchmarkingMainController {
   constructor($scope, $location, $anchorScroll) {
@@ -62,7 +65,7 @@ export class DeepBenchmarkingMainController {
         payload = eval(`(${this.payloads[resourceId]})`);
       } catch (e) {
         // @todo - remove error message when input is changed
-        this.errorText = `Invalid payload. Make sure it's a valid JSON object`;
+        this.errorText = 'Invalid payload. Make sure it\'s a valid JSON object';
         return false;
       }
     }
@@ -144,43 +147,44 @@ export class DeepBenchmarkingMainController {
 
     function execRequest(index, onCompleteCallback) {
       let requestInfo = {
-          index: index + 1,
-          start: new Date().getTime(),
-        };
+        index: index + 1,
+        start: new Date().getTime(),
+      };
 
-        let request = resourceAction.request(payload).disableCache();
-        if (requestGateway === _this.GATEWAY_LAMBDA) {
-          request.useDirectCall(true);
+      let request = resourceAction.request(payload).disableCache();
+      if (requestGateway === _this.GATEWAY_LAMBDA) {
+        request.useDirectCall(true);
+      }
+
+      request.send((response) => {
+        receivedResponses++;
+
+        requestInfo.stop = new Date().getTime();
+        requestInfo.duration = requestInfo.stop - requestInfo.start;
+        requestInfo.internalDebug =
+          !response.isError && response.data.hasOwnProperty('debug') ? response.data.debug : {};
+
+        if (response.logResult) {
+          let logInfo = _this._parseLogResult(response.logResult);
+          requestInfo.cost = _this._computeLambdaCost(logInfo);
+
+          Object.assign(requestInfo, logInfo);
         }
 
-        request.send((response) => {
-          receivedResponses++;
+        requestsStack.push(requestInfo);
 
-          requestInfo.stop = new Date().getTime();
-          requestInfo.duration = requestInfo.stop - requestInfo.start;
-          requestInfo.internalDebug = !response.isError && response.data.hasOwnProperty('debug') ? response.data.debug : {};
-
-          if (response.logResult) {
-            let logInfo = _this._parseLogResult(response.logResult);
-            requestInfo.cost = _this._computeLambdaCost(logInfo);
-
-            Object.assign(requestInfo, logInfo);
-          }
-
-          requestsStack.push(requestInfo);
-
-          if (receivedResponses == loops) {
-            onCompleteCallback(requestsStack);
-          }
-        });
-
-        index++;
-
-        if (index < loops) {
-          setTimeout(function() {
-            execRequest(index, onCompleteCallback);
-          }, intervalMs);
+        if (receivedResponses === loops) {
+          onCompleteCallback(requestsStack);
         }
+      });
+
+      index++;
+
+      if (index < loops) {
+        setTimeout(function() {
+          execRequest(index, onCompleteCallback);
+        }, intervalMs);
+      }
     }
 
     this._lambdaSizePromise.then((sizeMap) => {
@@ -236,29 +240,29 @@ export class DeepBenchmarkingMainController {
    */
   _computeLambdaCost(lambdaLogInfo) {
     let pricingMap = {
-      "128": 0.000000208,
-      "192": 0.000000313,
-      "256": 0.000000417,
-      "320": 0.000000521,
-      "384": 0.000000625,
-      "448": 0.000000729,
-      "512": 0.000000834,
-      "576": 0.000000938,
-      "640": 0.000001042,
-      "704": 0.000001146,
-      "768": 0.000001250,
-      "832": 0.000001354,
-      "896": 0.000001459,
-      "960": 0.000001563,
-      "1024": 0.000001667,
-      "1088": 0.000001771,
-      "1152": 0.000001875,
-      "1216": 0.000001980,
-      "1280": 0.000002084,
-      "1344": 0.000002188,
-      "1408": 0.000002292,
-      "1472": 0.000002396,
-      "1536": 0.000002501,
+      '128': 0.000000208,
+      '192': 0.000000313,
+      '256': 0.000000417,
+      '320': 0.000000521,
+      '384': 0.000000625,
+      '448': 0.000000729,
+      '512': 0.000000834,
+      '576': 0.000000938,
+      '640': 0.000001042,
+      '704': 0.000001146,
+      '768': 0.000001250,
+      '832': 0.000001354,
+      '896': 0.000001459,
+      '960': 0.000001563,
+      '1024': 0.000001667,
+      '1088': 0.000001771,
+      '1152': 0.000001875,
+      '1216': 0.000001980,
+      '1280': 0.000002084,
+      '1344': 0.000002188,
+      '1408': 0.000002292,
+      '1472': 0.000002396,
+      '1536': 0.000002501,
     };
 
     let provisionedMemorySize = lambdaLogInfo.memorySize;
@@ -296,7 +300,7 @@ export class DeepBenchmarkingMainController {
    * @private
    */
   get _lambdaSizePromise() {
-    if (this._lambdaSizePromiseInstance !== undefined) {
+    if (typeof this._lambdaSizePromiseInstance !== 'undefined') {
       return this._lambdaSizePromiseInstance;
     }
 

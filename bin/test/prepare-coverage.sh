@@ -11,7 +11,7 @@ else
   __IS_CONCURRENT_SCRIPT=${1}
 fi
 
-if [ "${IS_SKIP_TESTS}" == "false" ] && \
+if [ $(IS_ENV_VARS_AVAILABLE) == "1" ] && [ "${IS_SKIP_TESTS}" == "false" ] && \
   ([ "$__IS_CONCURRENT_SCRIPT" == "$__NONE" ] || [ "$__IS_CONCURRENT_SCRIPT" == "$__BACKEND" ]); then
 
   ##########################################################################################################
