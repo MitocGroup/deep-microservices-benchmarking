@@ -1,8 +1,6 @@
 'use strict';
 
 // Karma configuration
-// Generated on Fri Aug 14 2015 12:41:04 GMT+0300 (EEST)
-
 module.exports = function(config) {
   config.set({
 
@@ -16,11 +14,18 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'tests/frontend/vendor/github/angular/bower-angular@1.4.0/angular.js',
-      'tests/frontend/vendor/github/angular/bower-angular-mocks@1.4.5/angular-mocks.js',
+      'tests/frontend/vendor/github/angular/bower-angular-mocks@1.4.4/angular-mocks.js',
       'tests/frontend/vendor/github/angular-ui/ui-router@0.2.15/angular-ui-router.js',
+
+      //https://github.com/angular-ui/bootstrap/issues/1936
+      'tests/frontend/vendor/github/angular-ui/bootstrap-bower@0.12.1/ui-bootstrap-tpls.js',
       'tests/frontend/vendor/system.js',
       'tests/frontend/lib/DeepFramework.js',
       'tests/frontend/mock/lib/DeepFramework.js',
+      {pattern: 'tests/frontend/mock/data/*.json', watched: true, served: true, included: false},
+
+      //include the directory where directive templates are stored.
+      '**/views/directives/*.html',
     ],
 
     // jspm configuration
@@ -57,6 +62,7 @@ module.exports = function(config) {
     preprocessors: {
       'frontend/js/app/angular/**/*.js': ['coverage'],
       'tests/frontend/angular/**/*.spec.js': ['babel'],
+      '**/views/directives/*.html': 'ng-html2js',
     },
 
     babelPreprocessor: {
@@ -66,6 +72,10 @@ module.exports = function(config) {
       },
     },
 
+    ngHtml2JsPreprocessor: {
+      moduleName: 'templates',
+    },
+
     plugins: [
       'karma-babel-preprocessor',
       'karma-jasmine',
@@ -73,6 +83,7 @@ module.exports = function(config) {
       'karma-jspm',
       'karma-phantomjs-launcher',
       'karma-verbose-reporter',
+      'karma-ng-html2js-preprocessor',
     ],
 
     // test results reporter to use
@@ -112,7 +123,9 @@ module.exports = function(config) {
     logLevel: config.LOG_DEBUG,
 
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: true,
+    autoWatch: false,
+
+    browserNoActivityTimeout: 30000,
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher

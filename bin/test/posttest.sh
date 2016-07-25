@@ -28,7 +28,7 @@ if [ "${TEST_SUITE}" == "$__BACKEND" ] && \
 
   echo "Running E2E tests with protractor config: ${__PROTRACTOR_CONFIG_PATH}"
 
-  protractor ${__PROTRACTOR_CONFIG_PATH} --troubleshoot
+  protractor-flake --node-bin node --max-attempts=3 -- ${__PROTRACTOR_CONFIG_PATH}
 else
   echo "Skipping E2E tests..."
 fi
