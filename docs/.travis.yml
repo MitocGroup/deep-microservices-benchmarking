@@ -1,4 +1,8 @@
 env:
+  # Parallelize backend and fronted test
+  matrix:
+    - TEST_SUITE=backend
+    - TEST_SUITE=frontend
   global:
   # To enable run full CI build for specified branches
   - MAJOR_VERSIONS=master
