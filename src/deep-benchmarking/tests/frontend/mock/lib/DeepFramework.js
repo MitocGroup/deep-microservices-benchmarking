@@ -820,5 +820,6 @@ DeepFramework.Kernel.load({
         "Name":"DeepTestNamef58609f5"
       }
     }
-  }
+  },
+  'validationSchemas': [],
 }, function(){});
