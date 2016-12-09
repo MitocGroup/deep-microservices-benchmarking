@@ -12,9 +12,9 @@ import moduleName from './../name';
 export class DeepBenchmarkingMainController {
   constructor($scope, $location, $anchorScroll) {
     this._$scope = $scope;
-    this._deepResource = DeepFramework.Kernel.get('resource');
     this._$location = $location;
     this._$anchorScroll = $anchorScroll;
+    this._deepResource = DeepFramework.Kernel.get('resource');
 
     this.config = {
       loops: 2,
