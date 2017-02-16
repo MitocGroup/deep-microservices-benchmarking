@@ -189,6 +189,7 @@ export default {
   'forceUserIdentity': false,
   'microserviceIdentifier': 'deep-hello-world',
   'awsAccountId': 123456789123,
+  'apiVersion': 'v1',
   'appIdentifier': 'gfhfgdhfghgjgh7687687fghgfhgf',
   'timestamp': 1465996738254,
   'buckets': {
