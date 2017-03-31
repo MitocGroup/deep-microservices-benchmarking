@@ -20,6 +20,7 @@ module.exports = function(config) {
       //https://github.com/angular-ui/bootstrap/issues/1936
       'tests/frontend/vendor/github/angular-ui/bootstrap-bower@0.12.1/ui-bootstrap-tpls.js',
       'tests/frontend/vendor/system.js',
+      'tests/frontend/vendor/npm/babel-core@5.8.38/browser-polyfill.js',
       'tests/frontend/lib/DeepFramework.js',
       'tests/frontend/mock/lib/DeepFramework.js',
       {pattern: 'tests/frontend/mock/data/*.json', watched: true, served: true, included: false},
@@ -34,8 +35,8 @@ module.exports = function(config) {
       packages: 'tests/frontend/vendor/',
       useBundles: false,
       paths: {
-        'github:*': 'tests/frontend/vendor/github/*.js',
-        'npm:*': 'tests/frontend/vendor/npm/*.js',
+        'github:*': 'tests/frontend/vendor/github/*',
+        'npm:*': 'tests/frontend/vendor/npm/*',
       },
       loadFiles: [
         'tests/frontend/angular/**/*.spec.js',
