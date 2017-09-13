@@ -2,7 +2,7 @@ deep-microservices-benchmarking
 ===============================
 
 [![Build Status](https://travis-ci.org/MitocGroup/deep-microservices-benchmarking.svg?branch=master)](https://travis-ci.org/MitocGroup/deep-microservices-benchmarking)
-[![Test Coverage](https://codeclimate.com/repos/579230941b5f1a4f910012b9/badges/56076cd4e0183ecdbf45/coverage.svg)](https://codeclimate.com/repos/579230941b5f1a4f910012b9/coverage)
+[![Test Coverage](https://codeclimate.com/github/MitocGroup/deep-microservices-benchmarking/badges/coverage.svg?maxAge=0)](https://codeclimate.com/github/MitocGroup/deep-microservices-benchmarking)
 
 deep-microservices-benchmarking is a microservice designed to help benchmark web applications built
 on top of [DEEP Framework](https://github.com/MitocGroup/deep-framework). It could be used either
