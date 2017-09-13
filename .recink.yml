@@ -8,7 +8,6 @@ $:
     '$.cache.options.1.accessKeyId': 'eval'
     '$.cache.options.1.secretAccessKey': 'eval'
     '$.codeclimate.token': 'eval'
-    '$.snyk.token': 'eval'
   cache:
     driver: 's3'
     options:
@@ -55,8 +54,6 @@ $:
             secretAccessKey: 'process.env.AWS_SECRET_ACCESS_KEY'
   codeclimate:
     token: 'process.env.CODECLIMATE_REPO_TOKEN'
-  snyk:
-    token: 'process.env.SNYK_API_TOKEN'
 
 ### Add other modules here...
 test-microservice:
